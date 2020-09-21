@@ -5,6 +5,9 @@
     "autoload": {
         "psr-4": {
             "Azuriom\\Plugin\\Flyff\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     }
 }

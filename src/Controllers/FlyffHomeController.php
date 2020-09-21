@@ -2,6 +2,7 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers;
 
+use Azuriom\Plugin\Flyff\Models\User;
 use Azuriom\Http\Controllers\Controller;
 
 class FlyffHomeController extends Controller
@@ -13,6 +14,7 @@ class FlyffHomeController extends Controller
      */
     public function index()
     {
-        return view('flyff::index');
+        $user = User::ofUser(auth()->user());
+        return view('flyff::index', ['user'=>$user]);
     }
 }

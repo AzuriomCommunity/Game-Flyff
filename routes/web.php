@@ -1,7 +1,8 @@
 <?php
 
-use Azuriom\Plugin\Flyff\Controllers\FlyffHomeController;
 use Illuminate\Support\Facades\Route;
+use Azuriom\Plugin\Flyff\Controllers\FlyffHomeController;
+use Azuriom\Plugin\Flyff\Controllers\FlyffAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [FlyffHomeController::class, 'index']);
+Route::prefix('accounts')->name('accounts.')->middleware('auth')->group(function () {
+    Route::get('/', [FlyffHomeController::class, 'index'])->name('index');
+    Route::post('/', [FlyffAccountController::class, 'store'])->name('store');
+});
+
+

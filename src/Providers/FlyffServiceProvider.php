@@ -2,7 +2,9 @@
 
 namespace Azuriom\Plugin\Flyff\Providers;
 
+use Illuminate\Support\Facades\View;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
+use Azuriom\Plugin\Flyff\View\Composers\FlyffAdminDashboardComposer;
 
 class FlyffServiceProvider extends BasePluginServiceProvider
 {
@@ -73,6 +75,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
 
         $this->registerUserNavigation();
 
+        View::composer('admin.dashboard', FlyffAdminDashboardComposer::class);
         //
     }
 
@@ -96,7 +99,15 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     protected function adminNavigation()
     {
         return [
-            //
+            'flyff' => [
+                'name' => 'Flyff',
+                'type' => 'dropdown',
+                'icon' => 'fas fa-shopping-cart',
+                'route' => 'flyff.admin.*',
+                'items' => [
+                    'flyff.admin.index' => 'Players',
+                ],
+            ],
         ];
     }
 
@@ -108,7 +119,10 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     protected function userNavigation()
     {
         return [
-            //
+            'flyff' => [
+                'route' => 'flyff.accounts.index',
+                'name' => 'Flyff Accounts',
+            ]
         ];
     }
 }
