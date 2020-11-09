@@ -104,7 +104,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
             'flyff' => [
                 'name' => 'Flyff',
                 'type' => 'dropdown',
-                'icon' => 'fas fa-shopping-cart',
+                'icon' => 'fas fa-gamepad',
                 'route' => 'flyff.admin.*',
                 'items' => [
                     'flyff.admin.index' => 'Players',

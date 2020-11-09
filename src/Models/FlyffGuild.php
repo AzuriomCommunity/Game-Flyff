@@ -80,16 +80,6 @@ class FlyffGuild extends Model
         'CreateTime',
     ];
 
-    // /**
-    //  * Return all guilds order by specified column.
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Builder
-    //  */
-    // public static function getForRanking()
-    // {
-    //     return self::query()->orderBy('m_nLevel', 'DESC')->orderBy('CreateTime', 'ASC');
-    // }
-
     /**
      * Return members for this guild.
      *

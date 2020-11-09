@@ -26,10 +26,6 @@ class FlyffAccount extends Model
         'Azuriom_user_id',
     ];
 
-    protected $casts = [
-        'Azuriom_user_id' => 'int',
-    ];
-
     /**
      * Return the detail for this account.
      *

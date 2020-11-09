@@ -138,7 +138,6 @@ class FlyffCharacter extends Model
         });
     }
 
-
     /** @var string */
     protected $table = 'CHARACTER_01_DBF.dbo.CHARACTER_TBL';
 
@@ -232,16 +231,6 @@ class FlyffCharacter extends Model
         'FinalLevelDt',
     ];
 
-    // /**
-    //  * Return all players order by specified column.
-    //  *
-    //  * @return \Illuminate\Database\Eloquent\Builder
-    //  */
-    // public static function getForRanking()
-    // {
-    //     return self::valid()->orderBy('m_nLevel', 'DESC')->orderBy('TotalPlayTime', 'DESC');
-    // }
-
     /**
      * Return the account for this character.
      *
@@ -282,34 +271,6 @@ class FlyffCharacter extends Model
         return $this->hasOne(MultiServerInfo::class, 'm_idPlayer', 'm_idPlayer');
     }
 
-    // /**
-    //  * Send item to this player in game.
-    //  *
-    //  * @param int $id
-    //  * @param int $count
-    //  * @param bool $charged
-    //  */
-    // public function sendItem(int $id, int $count, bool $charged)
-    // {
-    //     ItemSend::query()->create([
-    //         'm_idPlayer' => $this->m_idPlayer,
-    //         'serverindex' => $this->serverindex,
-    //         'Item_Name' => $id,
-    //         'Item_count' => $count,
-    //         'm_bCharged' => $charged,
-    //     ]);
-    // }
-
-    // /**
-    //  * Return jobs info for this character.
-    //  *
-    //  * @return PropJob
-    //  * @throws \Exception
-    //  */
-    // public function getJobAttribute(): PropJob
-    // {
-    //     return PropJob::find($this->m_nJob);
-    // }
 
     /**
      * Return HTML icon gender for this character.
