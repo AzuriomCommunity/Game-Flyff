@@ -131,13 +131,6 @@ class FlyffCharacter extends Model
     /** @var bool */
     public $incrementing = false;
 
-    
-    public function getConnectionName()
-    {
-        FlyffServerBridge::setOdbcDatasource('CHARACTER_01_DBF');
-        return 'flyff';
-    }
-
     protected static function booted()
     {
         static::addGlobalScope('valid', function (Builder $builder) {
@@ -147,7 +140,7 @@ class FlyffCharacter extends Model
 
 
     /** @var string */
-    protected $table = 'CHARACTER_TBL';
+    protected $table = 'CHARACTER_01_DBF.dbo.CHARACTER_TBL';
 
     /** @var bool */
     public $timestamps = false;

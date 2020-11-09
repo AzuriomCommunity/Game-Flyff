@@ -7,7 +7,7 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
 class FlyffAccount extends Model
 {
-    protected $table = 'ACCOUNT_TBL';
+    protected $table = 'ACCOUNT_DBF.dbo.ACCOUNT_TBL';
     public $timestamps = false;
     public $incrementing = false;
     protected $primaryKey = 'account';
@@ -29,12 +29,6 @@ class FlyffAccount extends Model
     protected $casts = [
         'Azuriom_user_id' => 'int',
     ];
-
-    public function getConnectionName()
-    {
-        FlyffServerBridge::setOdbcDatasource('ACCOUNT_DBF');
-        return 'flyff';
-    }
 
     /**
      * Return the detail for this account.

@@ -3,6 +3,8 @@
 namespace Azuriom\Plugin\Flyff\Providers;
 
 use Illuminate\Support\Facades\View;
+use Azuriom\Plugin\Flyff\Games\FlyffGame;
+use Azuriom\Providers\GameServiceProvider;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Plugin\Flyff\View\Composers\FlyffAdminDashboardComposer;
 
@@ -50,7 +52,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function register()
     {
         $this->registerMiddlewares();
-
+        GameServiceProvider::addGames(['flyff'=> FlyffGame::class]);
         //
     }
 

@@ -48,14 +48,8 @@ class FlyffGuild extends Model
     /** @var bool */
     public $incrementing = false;
 
-    public function getConnectionName()
-    {
-        FlyffServerBridge::setOdbcDatasource('CHARACTER_01_DBF');
-        return 'flyff';
-    }
-
     /** @var string */
-    protected $table = 'GUILD_TBL';
+    protected $table = 'CHARACTER_01_DBF.dbo.GUILD_TBL';
 
     /** @var bool */
     public $timestamps = false;

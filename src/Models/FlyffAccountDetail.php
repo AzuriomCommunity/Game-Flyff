@@ -14,7 +14,7 @@ class FlyffAccountDetail extends Model
     public $incrementing = false;
 
     /** @var string */
-    protected $table = 'ACCOUNT_TBL_DETAIL';
+    protected $table = 'ACCOUNT_DBF.dbo.ACCOUNT_TBL_DETAIL';
 
     /** @var bool */
     public $timestamps = false;
@@ -40,9 +40,4 @@ class FlyffAccountDetail extends Model
         'regdate',
     ];
 
-    public function getConnectionName()
-    {
-        FlyffServerBridge::setOdbcDatasource('ACCOUNT_DBF');
-        return 'flyff';
-    }
 }

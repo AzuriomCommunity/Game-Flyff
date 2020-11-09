@@ -46,14 +46,8 @@ class FlyffGuildMember extends Model
         self::RANK_MEMBER => 'member',
     ];
 
-    public function getConnectionName()
-    {
-        FlyffServerBridge::setOdbcDatasource('CHARACTER_01_DBF');
-        return 'flyff';
-    }
-
     /** @var string */
-    protected $table = 'GUILD_MEMBER_TBL';
+    protected $table = 'CHARACTER_01_DBF.dbo.GUILD_MEMBER_TBL';
 
     /** @var bool */
     public $timestamps = false;
