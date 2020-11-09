@@ -89,7 +89,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     protected function routeDescriptions()
     {
         return [
-            //
+            'flyff.rankings.guilds' => 'flyff::messages.rankings.guilds',
+            'flyff.rankings.players' => 'flyff::messages.rankings.players'
         ];
     }
 

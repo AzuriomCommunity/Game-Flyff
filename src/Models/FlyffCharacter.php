@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Flyff\Models;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Azuriom\Plugin\Flyff\Models\FlyffGuildMember;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
 /**
@@ -248,7 +249,7 @@ class FlyffCharacter extends Model
      */
     public function guild()
     {
-        return $this->guildMember->guild();
+        return $this->hasOneThrough(FlyffGuild::class, FlyffGuildMember::class, 'm_idPlayer', 'm_idGuild',  'm_idPlayer', 'm_idGuild');
     }
 
     /**
@@ -258,7 +259,7 @@ class FlyffCharacter extends Model
      */
     public function guildMember()
     {
-        return $this->hasOne(GuildMember::class, 'm_idPlayer', 'm_idPlayer');
+        return $this->hasOne(FlyffGuildMember::class, 'm_idPlayer', 'm_idPlayer');
     }
 
     /**

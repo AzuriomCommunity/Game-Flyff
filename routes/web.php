@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Azuriom\Plugin\Flyff\Controllers\FlyffHomeController;
 use Azuriom\Plugin\Flyff\Controllers\FlyffAccountController;
+use Azuriom\Plugin\Flyff\Controllers\FlyffRankingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,11 @@ use Azuriom\Plugin\Flyff\Controllers\FlyffAccountController;
 Route::prefix('accounts')->name('accounts.')->middleware('auth')->group(function () {
     Route::get('/', [FlyffHomeController::class, 'index'])->name('index');
     Route::post('/', [FlyffAccountController::class, 'store'])->name('store');
+});
+
+Route::prefix('rankings')->name('rankings.')->group(function () {
+    Route::get('/guilds', [FlyffRankingsController::class, 'guilds'])->name('guilds');
+    Route::get('/players', [FlyffRankingsController::class, 'players'])->name('players');
 });
 
 
