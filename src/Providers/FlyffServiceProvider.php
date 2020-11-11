@@ -55,7 +55,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function register()
     {
         $this->registerMiddlewares();
-        GameServiceProvider::addGames(['flyff'=> FlyffGame::class]);
+        GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //
     }
 
