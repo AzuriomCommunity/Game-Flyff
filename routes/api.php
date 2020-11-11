@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ApiController::class, 'index']);
+Route::post('/upload_avatar', [ApiController::class, 'index']);

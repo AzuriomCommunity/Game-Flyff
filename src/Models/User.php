@@ -4,6 +4,8 @@ namespace Azuriom\Plugin\Flyff\Models;
 
 use Illuminate\Support\Collection;
 use Azuriom\Models\User as BaseUser;
+use Azuriom\Plugin\Flyff\Models\FlyffAccount;
+use Azuriom\Plugin\Flyff\Models\FlyffCharacter;
 
 /**
  * @property \Illuminate\Support\Collection|\Azuriom\Plugin\Shop\Models\PaymentItem[] $items
@@ -27,21 +29,8 @@ class User extends BaseUser
         return (new self())->newFromBuilder($baseUser->getAttributes());
     }
 
-    /**
-     * Return all characters for this user.
-     *
-     * @return Collection
-     */
-    public function getCharactersAttribute(): Collection
+    public function characters()
     {
-        $characters = new Collection();
-
-        $this->accounts->each(function (FlyffAccount $account) use (&$characters) {
-            if (!$account->is_banned) {
-                $characters = $characters->merge($account->characters);
-            }
-        });
-
-        return $characters;
+        return $this->hasManyThrough(FlyffCharacter::class, FlyffAccount::class, 'Azuriom_user_id', 'account', 'id', 'account');
     }
 }

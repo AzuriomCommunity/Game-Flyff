@@ -4,6 +4,7 @@ namespace Azuriom\Plugin\Flyff\Models;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Azuriom\Plugin\Flyff\Models\FlyffGuildMember;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
@@ -348,5 +349,13 @@ class FlyffCharacter extends Model
     public function getTotalTimePlayedAttribute(): string
     {
         return Carbon::now()->subSeconds($this->TotalPlayTime)->diffForHumans(null, true);
+    }
+
+    public function getAvatarUrl()
+    {
+        if(Storage::exists("public/flyff/avatars/{$this->flyffAccount->user->id}/{$this->m_szName}.png"))
+            return Storage::url("public/flyff/avatars/{$this->flyffAccount->user->id}/{$this->m_szName}.png");
+            
+        return plugin_asset('flyff', 'img/unknown_avatar.png');
     }
 }

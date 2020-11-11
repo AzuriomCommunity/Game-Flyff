@@ -18,7 +18,15 @@
         <tbody>
             @foreach ($characters as $character)
                 <tr>
-                    <th scope="row">{{$loop->iteration + ($characters->currentPage()-1) * $characters->perPage()}}</th>
+                    @php
+                        $character_rank = $loop->iteration + ($characters->currentPage()-1) * $characters->perPage()
+                    @endphp
+                    @if ($character_rank < 4)
+                        <th scope="row"><img style="width: 64px;height:64px" src="{{$character->getAvatarUrl()}}" alt=""></th>
+                    @else
+                        <th scope="row">{{$character_rank}}</th>
+                    @endif
+                    
                     <td>{{$character->m_szName}}</td>
                     <td>{{$character->guild->m_szGuild ?? '-'}}</td>
                     <td>{{$character->m_nLevel}}</td>

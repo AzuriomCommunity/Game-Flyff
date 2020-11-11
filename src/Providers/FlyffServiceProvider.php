@@ -2,7 +2,10 @@
 
 namespace Azuriom\Plugin\Flyff\Providers;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
 use Azuriom\Providers\GameServiceProvider;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
@@ -78,6 +81,12 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         $this->registerUserNavigation();
 
         View::composer('admin.dashboard', FlyffAdminDashboardComposer::class);
+
+        Event::listen(function (Registered $event) {
+            $event->user->access_token = Str::random(128);
+            $event->user->save();
+        });
+
         //
     }
 

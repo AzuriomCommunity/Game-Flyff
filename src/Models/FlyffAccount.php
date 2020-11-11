@@ -2,6 +2,7 @@
 
 namespace Azuriom\Plugin\Flyff\Models;
 
+use Azuriom\Plugin\Flyff\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
@@ -44,5 +45,10 @@ class FlyffAccount extends Model
     public function characters()
     {
         return $this->hasMany(FlyffCharacter::class, 'account', 'account');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'Azuriom_user_id');
     }
 }
