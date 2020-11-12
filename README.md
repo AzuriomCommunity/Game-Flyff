@@ -33,7 +33,9 @@ EXEC sp_addsrvrolemember
 - Now go to the Servers section and add a Flyff server (default port for WorldServer is 29000)
 
 
-## In-game Shop
+## Advanced
+
+### In-game Shop
 
 This part is a little bit more tricky and before going any further you should try to be familiar with the CMS.
 
@@ -41,3 +43,7 @@ It requires a theme (which you can download in the admin panel). The theme shoul
 [see Azuriom docs about themes](https://azuriom.com/en/docs/themes)
 
 Go to the [Flyff-Theme Github](https://github.com/AzuriomCommunity/Flyff-Theme/blob/master/README.md) to see how to modify your Flyff sources
+
+ ### Salt for password
+ 
+ You can change the default salt of 'kikugalanet' in your .env for exemple `MD5_HASH_KEY=my-new-salt`
