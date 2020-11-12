@@ -2,7 +2,7 @@
     "id": "flyff",
     "name": "flyff",
     "description": "Plugin for Azuriom",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "url": "https://azuriom.com",
     "authors": [
         "Azuriom"
@@ -10,5 +10,6 @@
     "providers": [
         "\\Azuriom\\Plugin\\Flyff\\Providers\\FlyffServiceProvider",
         "\\Azuriom\\Plugin\\Flyff\\Providers\\RouteServiceProvider"
-    ]
+    ],
+    "apiId":"35"
 }
