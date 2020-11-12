@@ -11,5 +11,5 @@
         "\\Azuriom\\Plugin\\Flyff\\Providers\\FlyffServiceProvider",
         "\\Azuriom\\Plugin\\Flyff\\Providers\\RouteServiceProvider"
     ],
-    "apiId":"35"
+    "apiId":35
 }
