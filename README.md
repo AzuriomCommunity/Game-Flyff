@@ -20,7 +20,9 @@ EXEC sp_addsrvrolemember
     @loginame = N'MyNewAdminUser', 
     @rolename = N'sysadmin';
 ```
-- Download php extensions : [sqlsrv](https://pecl.php.net/package/sqlsrv/5.8.1/windows) and [pdo_sqlsrv](https://pecl.php.net/package/pdo_sqlsrv/5.8.1/windows) to place the .dll in the extension folder of your php (ext). Becarefull about the x64 and x86 part and make sure they are enabled in the php.ini
+- Download php extensions : [sqlsrv](https://pecl.php.net/package/sqlsrv/5.8.1/windows) and [pdo_sqlsrv](https://pecl.php.net/package/pdo_sqlsrv/5.8.1/windows) to place the .dll in the extension folder of your php (ext). 
+
+#### Becarefull about the x64 and x86 part, if you need thread safe or not and make sure they are enabled in the php.ini
 
 ### CMS
 - Download the CMS : [https://azuriom.com/en/download](https://azuriom.com/en/download)
