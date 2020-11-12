@@ -2,12 +2,14 @@
 
 namespace Azuriom\Plugin\Flyff\Providers;
 
+use Azuriom\Models\Ban;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
 use Azuriom\Providers\GameServiceProvider;
+use Azuriom\Plugin\Flyff\Observers\BanObserver;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Plugin\Flyff\View\Composers\FlyffAdminDashboardComposer;
 
@@ -87,6 +89,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
             $event->user->save();
         });
 
+        Ban::observe(BanObserver::class);
         //
     }
 
