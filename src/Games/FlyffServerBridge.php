@@ -2,10 +2,11 @@
 
 namespace Azuriom\Plugin\Flyff\Games;
 
-use Azuriom\Games\ServerBridge;
-use Azuriom\Models\User;
-use Illuminate\Support\Facades\DB;
 use RuntimeException;
+use Azuriom\Models\User;
+use Azuriom\Games\ServerBridge;
+use Illuminate\Support\Facades\DB;
+use Azuriom\Plugin\Shop\Models\User as ShopUser;
 
 /**
  * CHARACTER_01_DBF
@@ -95,6 +96,13 @@ class FlyffServerBridge extends ServerBridge
                         ['isblock', 'F'],
                     ])->first();
 
+            if($character === null){
+                $shop_user = ShopUser::ofUser($user);
+                $last_item = $shop_user->items()->latest()->first();
+                $user->money += $last_item->payment->price;
+                $user->save();
+                abort(403, "You don't have any chars, you've been refunded");
+            }
             $idPlayer = $character->m_idPlayer;
             $idServer = $character->serverindex;
         } else {

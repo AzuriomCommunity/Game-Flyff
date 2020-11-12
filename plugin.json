@@ -2,10 +2,10 @@
     "id": "flyff",
     "name": "flyff",
     "description": "Plugin for Azuriom",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "url": "https://azuriom.com",
     "authors": [
-        "Azuriom"
+        "Javdu10"
     ],
     "providers": [
         "\\Azuriom\\Plugin\\Flyff\\Providers\\FlyffServiceProvider",
