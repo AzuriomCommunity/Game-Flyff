@@ -14,6 +14,7 @@ GO
 CREATE LOGIN MyNewAdminUser 
     WITH PASSWORD    = N'abcd',
     CHECK_POLICY     = OFF,
+    DEFAULT_LANGUAGE = us_english,
     CHECK_EXPIRATION = OFF;
 GO
 EXEC sp_addsrvrolemember 
