@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
 use Azuriom\Providers\GameServiceProvider;
 use Azuriom\Plugin\Flyff\Observers\BanObserver;
+use Azuriom\Plugin\Flyff\Middleware\CheckCharsShop;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Plugin\Flyff\View\Composers\FlyffAdminDashboardComposer;
 
@@ -90,6 +91,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         });
 
         Ban::observe(BanObserver::class);
+        
+        $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\CheckCharsShop::class);
         //
     }
 

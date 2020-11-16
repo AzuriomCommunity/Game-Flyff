@@ -96,13 +96,6 @@ class FlyffServerBridge extends ServerBridge
                         ['isblock', 'F'],
                     ])->first();
 
-            if($character === null){
-                $shop_user = ShopUser::ofUser($user);
-                $last_item = $shop_user->items()->latest()->first();
-                $user->money += $last_item->payment->price;
-                $user->save();
-                abort(403, "You don't have any chars, you've been refunded");
-            }
             $idPlayer = $character->m_idPlayer;
             $idServer = $character->serverindex;
         } else {
