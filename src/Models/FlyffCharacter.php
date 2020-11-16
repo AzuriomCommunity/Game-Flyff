@@ -264,34 +264,13 @@ class FlyffCharacter extends Model
     }
 
     /**
-     * Return online info for this character.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function onlineInfo()
-    {
-        return $this->hasOne(MultiServerInfo::class, 'm_idPlayer', 'm_idPlayer');
-    }
-
-
-    /**
      * Return HTML icon gender for this character.
      *
      * @return string
      */
     public function getSexIconAttribute(): string
     {
-        return $this->m_dwSex === 0 ? 'mars' : 'venus';
-    }
-
-    /**
-     * Return HTML icon gender for this character.
-     *
-     * @return string
-     */
-    public function getSexTitleAttribute(): string
-    {
-        return $this->m_dwSex === 0 ? 'M' : 'F';
+        return plugin_asset('flyff', "img/sex_icons/{$this->m_dwSex}.png");;
     }
 
     /**
@@ -359,12 +338,12 @@ class FlyffCharacter extends Model
         return plugin_asset('flyff', 'img/unknown_avatar.png');
     }
 
-    public function getJobName()
+    public function getJobNameAttribute()
     {
         return trans("flyff::messages.jobs.{$this->m_nJob}");
     }
 
-    public function getJobIcon()
+    public function getJobIconAttribute()
     {
         if ($master = $this->MasterRank) {
             return plugin_asset('flyff', "img/jobs/master/{$this->m_nJob}_$master.png");

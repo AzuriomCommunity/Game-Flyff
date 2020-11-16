@@ -32,20 +32,6 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
  */
 class FlyffGuildMember extends Model
 {
-    public const RANK_MASTER = 0;
-    public const RANK_GENERAL = 1;
-    public const RANK_OFFICER = 2;
-    public const RANK_VETERAN = 3;
-    public const RANK_MEMBER = 4;
-
-    public const RANKS = [
-        self::RANK_MASTER => 'master',
-        self::RANK_GENERAL => 'general',
-        self::RANK_OFFICER => 'officer',
-        self::RANK_VETERAN => 'veteran',
-        self::RANK_MEMBER => 'member',
-    ];
-
     /** @var string */
     protected $table = 'CHARACTER_01_DBF.dbo.GUILD_MEMBER_TBL';
 
@@ -90,17 +76,10 @@ class FlyffGuildMember extends Model
         return $this->belongsTo(FlyffCharacter::class, 'm_idPlayer', 'm_idPlayer');
     }
 
-    // /**
-    //  * Return name of logo for his rank or null (it's not supposed to happen).
-    //  *
-    //  * @return null|string
-    //  */
-    // public function getRankLogoAttribute(): ?string
-    // {
-    //     $name = ucfirst(self::RANKS[$this->m_nMemberLv]);
-
-    //     return asset(sprintf("/images/guilds/%s.png", $name));
-    // }
+    public function getRankIconAttribute(): ?string
+    {
+       return plugin_asset('flyff', "img/guild/ranks/{$this->m_nMemberLv}.png"); 
+    }
 
     /**
      * Return name of logo for his rank or null (it's not supposed to happen).
@@ -109,8 +88,6 @@ class FlyffGuildMember extends Model
      */
     public function getRankTitleAttribute(): ?string
     {
-        $name = self::RANKS[$this->m_nMemberLv];
-
-        return $name;
+        return trans("flyff::messages.guild_ranks.{$this->m_nMemberLv}");
     }
 }

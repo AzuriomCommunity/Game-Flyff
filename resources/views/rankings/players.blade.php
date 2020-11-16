@@ -27,10 +27,10 @@
                         <th scope="row">{{$character_rank}}</th>
                     @endif
                     
-                    <td>{{$character->m_szName}}</td>
+                    <td><img src="{{$character->SexIcon}}" alt=""> {{$character->m_szName}}</td>
                     <td>{{$character->guild->m_szGuild ?? '-'}}</td>
                     <td>{{$character->m_nLevel}}</td>
-                    <td><img src="{{$character->getJobIcon()}}" alt="{{$character->getJobName()}}"> {{$character->getJobName()}}</td>
+                    <td><img src="{{$character->JobIcon}}" alt="{{$character->JobName}}"> {{$character->JobName}}</td>
                     <td>{{$character->TotalTimePlayed}}</td>
                 </tr>
             @endforeach

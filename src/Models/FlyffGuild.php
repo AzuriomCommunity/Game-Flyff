@@ -110,24 +110,18 @@ class FlyffGuild extends Model
      *
      * @return bool
      */
-    public function getHasLogoAttribute(): bool
+    public function getHasIconAttribute(): bool
     {
         return $this->m_dwLogo >= 1 && $this->m_dwLogo <= 27;
     }
 
-    // /**
-    //  * Return formatted logo, or - if she doesn't have logo, for this guild.
-    //  *
-    //  * @return string
-    //  */
-    // public function getLogoAttribute(): string
-    // {
-    //     if ($this->m_dwLogo < 10) {
-    //         $this->m_dwLogo = '0' . $this->m_dwLogo;
-    //     }
+    public function getIconAttribute(): string
+    {
+        if($this->HasIcon)
+            return plugin_asset('flyff', "img/guild/ranks/{$this->m_dwLogo}.jpg");
 
-    //     return asset(sprintf("/images/guilds/Icon_CloakSLogo%d.jpg", $this->m_dwLogo));
-    // }
+        return plugin_asset('flyff', "img/guild/ranks/unknown.png");
+    }
 
     /**
      * Return max members count for this guild.

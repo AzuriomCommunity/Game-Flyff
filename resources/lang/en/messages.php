@@ -46,5 +46,12 @@ return [
         '37' => 'Forcemaster',
         '38' => 'Mentalist',
         '39'=> 'Arcanist',
-    ]
+    ],
+    'guild_ranks' => [
+        0 => 'Master',
+        1 => 'General',
+        2 => 'Officer',
+        3 => 'Veteran',
+        4 => 'Member',
+    ],
 ];

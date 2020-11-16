@@ -46,5 +46,12 @@ return [
         '37' => 'Chanoine',
         '38' => 'Envouteur',
         '39'=> 'Arcaniste',
-    ]
+    ],
+    'guild_ranks' => [
+        0 => 'Chef',
+        1 => 'Général',
+        2 => 'Officier',
+        3 => 'Vétéran',
+        4 => 'Membre',
+    ],
 ];
