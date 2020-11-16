@@ -30,7 +30,7 @@
                     <td>{{$character->m_szName}}</td>
                     <td>{{$character->guild->m_szGuild ?? '-'}}</td>
                     <td>{{$character->m_nLevel}}</td>
-                    <td>{{$character->m_nJob}}</td>
+                    <td><img src="{{$character->getJobIcon()}}" alt="{{$character->getJobName()}}"> {{$character->getJobName()}}</td>
                     <td>{{$character->TotalTimePlayed}}</td>
                 </tr>
             @endforeach

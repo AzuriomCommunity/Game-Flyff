@@ -358,4 +358,18 @@ class FlyffCharacter extends Model
             
         return plugin_asset('flyff', 'img/unknown_avatar.png');
     }
+
+    public function getJobName()
+    {
+        return trans("flyff::messages.jobs.{$this->m_nJob}");
+    }
+
+    public function getJobIcon()
+    {
+        if ($master = $this->MasterRank) {
+            return plugin_asset('flyff', "img/jobs/master/{$this->m_nJob}_$master.png");
+        }
+
+        return plugin_asset('flyff', "img/jobs/{$this->m_nJob}.png");
+    }
 }
