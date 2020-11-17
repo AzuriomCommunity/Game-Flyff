@@ -28,7 +28,7 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
  * @property string rank_title
  *
  * @property Guild guild
- * @property Character player
+ * @property Character character
  */
 class FlyffGuildMember extends Model
 {
@@ -67,11 +67,11 @@ class FlyffGuildMember extends Model
     }
 
     /**
-     * Return player for this guild member.
+     * Return character for this guild member.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function player()
+    public function character()
     {
         return $this->belongsTo(FlyffCharacter::class, 'm_idPlayer', 'm_idPlayer');
     }

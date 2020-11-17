@@ -233,6 +233,10 @@ class FlyffCharacter extends Model
         'FinalLevelDt',
     ];
 
+    public function getRouteKeyName() {
+        return 'm_szName';
+    }
+
     /**
      * Return the account for this character.
      *
@@ -330,7 +334,7 @@ class FlyffCharacter extends Model
         return Carbon::now()->subSeconds($this->TotalPlayTime)->diffForHumans(null, true);
     }
 
-    public function getAvatarUrl()
+    public function getAvatarUrlAttribute()
     {
         if(Storage::exists("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png"))
             return Storage::url("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png");

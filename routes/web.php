@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Azuriom\Plugin\Flyff\Controllers\FlyffHomeController;
+use Azuriom\Plugin\Flyff\Controllers\FlyffGuildController;
 use Azuriom\Plugin\Flyff\Controllers\FlyffAccountController;
-use Azuriom\Plugin\Flyff\Controllers\FlyffRankingsController;
+use Azuriom\Plugin\Flyff\Controllers\FlyffCharacterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,14 @@ Route::prefix('accounts')->name('accounts.')->middleware('auth')->group(function
     Route::post('/', [FlyffAccountController::class, 'store'])->name('store');
 });
 
-Route::prefix('rankings')->name('rankings.')->group(function () {
-    Route::get('/guilds', [FlyffRankingsController::class, 'guilds'])->name('guilds');
-    Route::get('/players', [FlyffRankingsController::class, 'players'])->name('players');
+Route::prefix('guilds')->name('guilds.')->group(function(){
+    Route::get('/', [FlyffGuildController::class, 'index'])->name('index');
+    Route::get('/{guild}', [FlyffGuildController::class, 'show'])->name('show');
+});
+
+Route::prefix('characters')->name('characters.')->group(function(){
+    Route::get('/', [FlyffCharacterController::class, 'index'])->name('index');
+    Route::get('/{character}', [FlyffCharacterController::class, 'show'])->name('show');
 });
 
 

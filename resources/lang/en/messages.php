@@ -1,10 +1,8 @@
 <?php
 
 return [
-    'rankings' => [
-        'guilds' => 'Guilds',
-        'players' => 'Players',
-    ],
+    'guilds' => 'Guilds',
+    'characters' => 'Characters',
     'jobs' => [
         '0' => 'Vagrant',
         '1' => 'Mercenary', //Job 15-60

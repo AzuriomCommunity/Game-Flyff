@@ -80,6 +80,10 @@ class FlyffGuild extends Model
         'CreateTime',
     ];
 
+    public function getRouteKeyName() {
+        return 'm_szGuild';
+    }
+
     /**
      * Return members for this guild.
      *
@@ -102,7 +106,7 @@ class FlyffGuild extends Model
      */
     public function leader()
     {
-        return $this->members()->where('m_nClass', '=', 0)->get()->first()->player();
+        return $this->members()->where('m_nClass', '=', 0)->get()->first()->character();
     }
 
     /**
@@ -118,9 +122,9 @@ class FlyffGuild extends Model
     public function getIconAttribute(): string
     {
         if($this->HasIcon)
-            return plugin_asset('flyff', "img/guild/ranks/{$this->m_dwLogo}.jpg");
+            return plugin_asset('flyff', "img/guild/icons/{$this->m_dwLogo}.jpg");
 
-        return plugin_asset('flyff', "img/guild/ranks/unknown.png");
+        return plugin_asset('flyff', "img/guild/icons/unknown.png");
     }
 
     /**

@@ -104,8 +104,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     protected function routeDescriptions()
     {
         return [
-            'flyff.rankings.guilds' => 'flyff::messages.rankings.guilds',
-            'flyff.rankings.players' => 'flyff::messages.rankings.players'
+            'flyff.guilds.index' => 'flyff::messages.guilds',
+            'flyff.characters.index' => 'flyff::messages.characters'
         ];
     }
 
@@ -123,7 +123,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 'icon' => 'fas fa-gamepad',
                 'route' => 'flyff.admin.*',
                 'items' => [
-                    'flyff.admin.index' => 'Players',
+                    'flyff.admin.index' => 'Comptes',
                 ],
             ],
         ];

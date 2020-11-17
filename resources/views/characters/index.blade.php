@@ -13,6 +13,7 @@
                 <th scope="col">Level</th>
                 <th scope="col">Job</th>
                 <th scope="col">Play time</th>
+                <th scope="col">{{ trans('messages.fields.action') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +23,7 @@
                         $character_rank = $loop->iteration + ($characters->currentPage()-1) * $characters->perPage()
                     @endphp
                     @if ($character_rank < 4)
-                        <th scope="row"><img style="width: 64px;height:64px" src="{{$character->getAvatarUrl()}}" alt=""></th>
+                        <th scope="row"><img style="width: 64px;height:64px" src="{{$character->AvatarUrl}}" alt=""></th>
                     @else
                         <th scope="row">{{$character_rank}}</th>
                     @endif
@@ -32,6 +33,9 @@
                     <td>{{$character->m_nLevel}}</td>
                     <td><img src="{{$character->JobIcon}}" alt="{{$character->JobName}}"> {{$character->JobName}}</td>
                     <td>{{$character->TotalTimePlayed}}</td>
+                    <td>
+                        <a href="{{route('flyff.characters.show', $character->m_szName)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-toggle="tooltip"><i class="fas fa-eye"></i></a>
+                    </td>
                 </tr>
             @endforeach
             
