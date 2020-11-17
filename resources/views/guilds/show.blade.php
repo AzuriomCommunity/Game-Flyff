@@ -19,12 +19,7 @@
         <tbody>
             @foreach ($guild->members as $member)
                 <tr>
-                    @if ($loop->iteration < 4)
-                        <th scope="row"><img style="width: 64px;height:64px" src="{{$member->character->AvatarUrl}}" alt=""></th>
-                    @else
-                        <th scope="row">{{$loop->iteration}}</th>
-                    @endif
-                    
+                    <th scope="row"><img style="width: 64px;height:64px" src="{{$member->character->AvatarUrl}}" alt=""></th>
                     <td><img src="{{$member->character->SexIcon}}" alt=""> {{$member->character->m_szName}}</td>
                     <td><img src="{{$member->RankIcon}}" alt=""> {{$member->RankTitle}}</td>
                     <td>{{$member->character->m_nLevel}}</td>
