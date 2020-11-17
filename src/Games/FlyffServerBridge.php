@@ -58,7 +58,7 @@ class FlyffServerBridge extends ServerBridge
         $playerNameIfNavigator = request()->flyff_player_name;
 
         if (empty($idPlayer) || empty($idServer)) {
-            $this->getPlayerFromNameOrFallback($playerNameIfNavigator, $user, $idPlayer, $idServer);
+            $this->getPlayerFallback($user, $idPlayer, $idServer);
         } else {
             $idPlayer = str_pad($idPlayer, 7, '0', STR_PAD_LEFT); //formating nothing important
             $idServer = str_pad($idServer, 2, '0', STR_PAD_LEFT);
@@ -81,9 +81,8 @@ class FlyffServerBridge extends ServerBridge
         return self::DEFAULT_PORT;
     }
 
-    private function getPlayerFromNameOrFallback($playerNameIfNavigator, $user, &$idPlayer, &$idServer)
+    private function getPlayerFallback($user, &$idPlayer, &$idServer)
     {
-        if (empty($playerNameIfNavigator)) {
             //this is the fallback, it gets the first character, not deleted of the Azuriom connected user.
             $account = DB::table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
@@ -98,21 +97,7 @@ class FlyffServerBridge extends ServerBridge
 
             $idPlayer = $character->m_idPlayer;
             $idServer = $character->serverindex;
-        } else {
-            $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
-                ->select('m_idPlayer', 'serverindex', 'MultiServer')
-                ->where([ //get first not deleted character
-                    ['m_szName', $playerNameIfNavigator],
-                    ['isblock', 'F'],
-                ])->first();
-
-            if (! $character) {
-                abort(403, 'Character not found');
-            }
-
-            $idPlayer = $character->m_idPlayer;
-            $idServer = $character->serverindex;
-        }
+        
     }
 
     private function playerIsConnected($idPlayer, $idServer)

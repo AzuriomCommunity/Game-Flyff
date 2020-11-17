@@ -33,4 +33,6 @@ Route::prefix('characters')->name('characters.')->group(function(){
     Route::get('/{character}', [FlyffCharacterController::class, 'show'])->name('show');
 });
 
+Route::post('/update_character', [FlyffCharacterController::class, 'shop_update_character'])->name('cart.update_character');
+
 

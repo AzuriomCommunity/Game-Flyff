@@ -28,5 +28,6 @@
             @endforeach
         </tbody>
     </table>
+    {{$guilds->links()}}
 </div>
 @endsection
