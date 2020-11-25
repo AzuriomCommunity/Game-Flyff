@@ -1,7 +1,9 @@
 <?php
 
-use Azuriom\Plugin\Flyff\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
+use Azuriom\Plugin\Flyff\Controllers\Admin\MailController;
+use Azuriom\Plugin\Flyff\Controllers\Admin\AdminController;
+use Azuriom\Plugin\Flyff\Controllers\Admin\TradeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AdminController::class, 'index'])->name('index');
+
+Route::get('/mails', [MailController::class, 'index'])->name('mails');
+
+
+Route::prefix('trades')->name('trades.')->group(function(){
+    Route::get('/', [TradeController::class, 'index'])->name('index');
+    Route::get('/{trade}', [TradeController::class, 'show'])->name('show');
+});
+
+
+
