@@ -127,6 +127,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     'flyff.admin.index' => 'Comptes',
                     'flyff.admin.mails' => 'Mails',
                     'flyff.admin.trades.index' => 'Trades',
+                    'flyff.admin.lookup' => 'Item Lookup',
                 ],
             ],
         ];

@@ -3,6 +3,7 @@
 namespace Azuriom\Plugin\Flyff\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Azuriom\Plugin\Flyff\Models\GuildBank;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
 /**
@@ -145,6 +146,11 @@ class FlyffGuild extends Model
     public function getPenyasAttribute(): string
     {
         return number_format($this->m_nGuildGold, 0, '.', ' ');
+    }
+
+    public function bank()
+    {
+        return $this->hasOne(GuildBank::class, 'm_idGuild', 'm_idGuild');
     }
 
     protected const maxMembersCount = [

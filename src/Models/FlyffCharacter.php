@@ -3,6 +3,9 @@
 namespace Azuriom\Plugin\Flyff\Models;
 
 use Illuminate\Support\Carbon;
+use Azuriom\Plugin\Flyff\Models\Bank;
+use Azuriom\Plugin\Flyff\Models\Mail;
+use Azuriom\Plugin\Flyff\Models\Pocket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
@@ -359,5 +362,20 @@ class FlyffCharacter extends Model
     public function getWorldNameAttribute()
     {
         return trans("flyff::messages.world_names.{$this->dwWorldID}");
+    }
+
+    public function pocket()
+    {
+        return $this->hasOne(Pocket::class, 'idPlayer', 'm_idPlayer');
+    }
+
+    public function bank()
+    {
+        return $this->hasOne(Bank::class, 'm_idPlayer', 'm_idPlayer');
+    }
+
+    public function mails()
+    {
+        return $this->hasMany(Mail::class, 'm_idPlayer','idReceiver');
     }
 }

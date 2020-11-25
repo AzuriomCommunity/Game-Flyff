@@ -2,10 +2,8 @@
 
 namespace Azuriom\Plugin\Flyff\Models;
 
-use Azuriom\Plugin\Flyff\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Azuriom\Plugin\Flyff\Models\FlyffCharacter;
-use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
 class Mail extends Model
 {
@@ -20,6 +18,6 @@ class Mail extends Model
 
     public function receiver()
     {
-        return $this->hasOne(FlyffCharacter::class,  'm_idPlayer','idReceiver' )->withoutGlobalScopes(['valid']);
+        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idReceiver')->withoutGlobalScopes(['valid']);
     }
 }
