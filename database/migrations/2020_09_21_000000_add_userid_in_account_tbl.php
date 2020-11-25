@@ -16,7 +16,8 @@ class AddUseridInAccountTbl extends Migration
     public function up()
     {
         $azuriom_db = config("database.connections.sqlsrv.database");
-        User::all()->each(function($user){
+        $users = User::all();
+        $users->each(function($user){
             $user->access_token = Str::random(128);
             $user->save();
         });

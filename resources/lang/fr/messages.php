@@ -52,4 +52,17 @@ return [
         3 => 'Vétéran',
         4 => 'Membre',
     ],
+    'world_names' => [
+        1 => 'Madrigal',
+        2 => 'Azria',
+        3 => 'Corail',
+        4 => 'Rartesia',
+        5 => 'Sombrésia',
+
+        21 => 'Tour Oubliée B1',
+        22 => 'Tour Oubliée B2',
+        23 => 'Tour Oubliée B3',
+        24 => 'Tour Oubliée B4',
+        25 => 'Tour Oubliée B5',
+    ],
 ];

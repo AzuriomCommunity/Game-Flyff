@@ -355,4 +355,9 @@ class FlyffCharacter extends Model
 
         return plugin_asset('flyff', "img/jobs/{$this->m_nJob}.png");
     }
+
+    public function getWorldNameAttribute()
+    {
+        return trans("flyff::messages.world_names.{$this->dwWorldID}");
+    }
 }
