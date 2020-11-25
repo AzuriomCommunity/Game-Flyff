@@ -36,31 +36,29 @@ class ItemController extends Controller
             $inventories = Mail::where([['dwItemId', $itemID], ['ItemReceiveDt', null]])->get();
             $this->checkInventory($result, $inventories, 'nItemNum', 'sender', 'm_szName', $itemID, $min);
 
-
             $inventories = GuildBank::where('m_GuildBank', 'like', "%$itemID%")->get();
             $this->checkInventory($result, $inventories, 'm_GuildBank', 'guild', 'm_szGuild', $itemID, $min);
         }
-        
 
         return view('flyff::admin.items.lookup', ['result' => $result, 'itemID' => $itemID, 'min' => $min]);
     }
 
     private function checkInventory(&$result, $inventories, $inventory_key, $relationship, $owner_key, $itemID, $min)
     {
-
         foreach ($inventories as $inventory) {
             $objects = explode('/', $inventory->{$inventory_key});
-            foreach ($objects as  $object) {
+            foreach ($objects as $object) {
                 $props = explode(',', $object);
-                if(count($props) > 6) {
+                if (count($props) > 6) {
                     if ( $props[1] == $itemID && $props[5] >= $min )
                     {
-                        if($relationship == 'guild') {
+                        if ($relationship == 'guild') {
                             $result['guilds'][$inventory->{$relationship}->{$owner_key}] = $props[5];
                         } else {
-                             $result['characters'][$inventory->{$relationship}->{$owner_key}][$inventory_key] = $props[5];
+                            if ($inventory->{$relationship}->isblock == 'F') {
+                                $result['characters'][$inventory->{$relationship}->{$owner_key}][$inventory_key] = $props[5];
+                            }
                         }
-                        
                     }
                 }
             }

@@ -9,6 +9,7 @@ use Azuriom\Plugin\Flyff\Models\Pocket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use Azuriom\Plugin\Flyff\Models\Inventory;
 use Azuriom\Plugin\Flyff\Models\FlyffGuildMember;
 use Azuriom\Games\Others\Servers\FlyffServerBridge;
 
@@ -376,6 +377,11 @@ class FlyffCharacter extends Model
 
     public function mails()
     {
-        return $this->hasMany(Mail::class, 'm_idPlayer','idReceiver');
+        return $this->hasMany(Mail::class, 'idReceiver', 'm_idPlayer');
+    }
+
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class, 'm_idPlayer', 'm_idPlayer');
     }
 }
