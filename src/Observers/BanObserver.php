@@ -21,6 +21,11 @@ class BanObserver
             $account->detail->BlockTime = today()->addYears(10)->format('Ymd');
             $account->detail->save();
         });
+
+        $user->characters->each(function ($character) {
+            $character->isblock = 'D';
+            $character->save();
+        });
     }
 
     /**
@@ -36,6 +41,11 @@ class BanObserver
         $user->accounts->each(function ($account) {
             $account->detail->BlockTime = today()->subDays(1)->format('Ymd');
             $account->detail->save();
+        });
+
+        $user->characters->each(function ($character) {
+            $character->isblock = 'F';
+            $character->save();
         });
     }
 }
