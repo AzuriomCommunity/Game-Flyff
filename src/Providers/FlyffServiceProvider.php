@@ -57,6 +57,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
      */
     public function register()
     {
+        require_once __DIR__.'/../../vendor/autoload.php';
+        
         $this->registerMiddlewares();
         GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //

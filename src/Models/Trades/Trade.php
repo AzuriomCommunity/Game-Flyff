@@ -18,7 +18,8 @@ class Trade extends Model
     protected $table = 'LOGGING_01_DBF.dbo.tblTradeLog';
     public $timestamps = false;
     public $incrementing = false;
-
+    protected $primaryKey = ['TradeID','serverindex'];
+    
     protected $dates = [
         'TradeDt',
     ];

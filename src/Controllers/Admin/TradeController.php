@@ -13,16 +13,31 @@ class TradeController extends Controller
     {
         $search = $request->input('search');
 
-        $query = Trade::whereHas('firstTradeDetail.character', function (Builder $query) use ($search){
-            $query->where('m_szName', 'like', "%$search%");}
-        )->orWhereHas('secondTradeDetail.character', function (Builder $query) use ($search){
-            $query->where('m_szName', 'like', "%$search%");}
-        );
+        $bigQuery = Trade::whereHas('firstTradeDetail.character', function (Builder $query) use ($search){
+            $query->where('m_szName', 'like', "%$search%");
+        })->orWhereHas('secondTradeDetail.character', function (Builder $query) use ($search){
+            $query->where('m_szName', 'like', "%$search%");
+        });
+
         if (is_numeric($search)) {
-            $query->orWhere('TradeID', $search);
+            $bigQuery->orWhere('TradeID', $search);
+            $bigQuery->orWhereHas('firstTradeDetail', function (Builder $query) use ($search){
+                $query->where('TradeGold', $search);
+            });
+            $bigQuery->orWhereHas('secondTradeDetail', function (Builder $query) use ($search){
+                $query->where('TradeGold', $search);
+            });
+            $bigQuery->orWhereHas('firstTradeDetail.sentItems', function (Builder $query) use ($search){
+                $query->where('ItemIndex', $search);
+            });
+            $bigQuery->orWhereHas('secondTradeDetail.sentItems', function (Builder $query) use ($search){
+                $query->where('ItemIndex', $search);
+            });
         }
+
         return view('flyff::admin.trades.index', [
-            'trades' => $query->paginate(20),
+            'trades' => $bigQuery->paginate(20),
+            'search' => $search
         ]);
     }
 

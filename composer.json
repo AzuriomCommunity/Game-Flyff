@@ -9,5 +9,8 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "require": {
+        "awobaz/compoships": "^2.0"
     }
 }
