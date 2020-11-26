@@ -35,6 +35,8 @@ class FlyffGuildMember extends Model
     /** @var string */
     protected $table = 'CHARACTER_01_DBF.dbo.GUILD_MEMBER_TBL';
 
+    protected $connection = 'sqlsrv';
+
     /** @var bool */
     public $timestamps = false;
 

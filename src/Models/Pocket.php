@@ -11,6 +11,8 @@ class Pocket extends Model
     public $timestamps = false;
     public $incrementing = false;
 
+    protected $connection = 'sqlsrv';
+
     public function character()
     {
         return $this->belongsTo(FlyffCharacter::class, 'idPlayer', 'm_idPlayer' )->withoutGlobalScopes(['valid']);

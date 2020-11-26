@@ -11,6 +11,8 @@ class Mail extends Model
     public $timestamps = false;
     public $incrementing = false;
 
+    protected $connection = 'sqlsrv';
+
     public function sender()
     {
         return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idSender')->withoutGlobalScopes(['valid']);

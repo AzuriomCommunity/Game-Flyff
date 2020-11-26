@@ -10,6 +10,8 @@ class FlyffAccountDetail extends Model
     /** @var string */
     protected $primaryKey = 'account';
 
+    protected $connection = 'sqlsrv';
+
     /** @var bool */
     public $incrementing = false;
 

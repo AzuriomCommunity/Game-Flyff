@@ -11,6 +11,8 @@ class GuildBank extends Model
     public $timestamps = false;
     public $incrementing = false;
 
+    protected $connection = 'sqlsrv';
+
     public function guild()
     {
         return $this->belongsTo(FlyffGuild::class, 'm_idGuild', 'm_idGuild')->withoutGlobalScopes(['valid']);

@@ -19,6 +19,8 @@ class Trade extends Model
     public $timestamps = false;
     public $incrementing = false;
     protected $primaryKey = ['TradeID','serverindex'];
+
+    protected $connection = 'sqlsrv';
     
     protected $dates = [
         'TradeDt',

@@ -46,6 +46,8 @@ class FlyffGuild extends Model
     /** @var string */
     protected $primaryKey = 'm_idGuild';
 
+    protected $connection = 'sqlsrv';
+
     /** @var bool */
     public $incrementing = false;
 

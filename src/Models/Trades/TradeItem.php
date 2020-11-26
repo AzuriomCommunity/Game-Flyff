@@ -12,5 +12,7 @@ class TradeItem extends Model
     public $timestamps = false;
     public $incrementing = false;
 
+    protected $connection = 'sqlsrv';
+
     protected $primaryKey = ['TradeID', 'serverindex', 'idPlayer', 'ItemIndex', 'ItemSerialNum'];
 }

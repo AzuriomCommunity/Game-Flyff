@@ -7,9 +7,6 @@ use Azuriom\Models\User as BaseUser;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Models\FlyffCharacter;
 
-/**
- * @property \Illuminate\Support\Collection|\Azuriom\Plugin\Shop\Models\PaymentItem[] $items
- */
 class User extends BaseUser
 {
     /**

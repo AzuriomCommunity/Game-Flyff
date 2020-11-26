@@ -134,6 +134,8 @@ class FlyffCharacter extends Model
     /** @var string */
     protected $primaryKey = 'm_idPlayer';
 
+    protected $connection = 'sqlsrv';
+
     /** @var bool */
     public $incrementing = false;
 

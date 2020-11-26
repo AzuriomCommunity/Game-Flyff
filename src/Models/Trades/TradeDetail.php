@@ -15,6 +15,8 @@ class TradeDetail extends Model
     public $incrementing = false;
     protected $primaryKey = ['TradeID', 'serverindex', 'idPlayer'];
 
+    protected $connection = 'sqlsrv';
+
     public function character()
     {
         return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idPlayer')->withoutGlobalScopes(['valid']);

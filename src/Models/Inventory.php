@@ -11,6 +11,8 @@ class Inventory extends Model
     public $timestamps = false;
     public $incrementing = false;
 
+    protected $connection = 'sqlsrv';
+
     public function character()
     {
         return $this->belongsTo(FlyffCharacter::class, 'm_idPlayer', 'm_idPlayer')->withoutGlobalScopes(['valid']);

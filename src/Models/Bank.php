@@ -10,6 +10,7 @@ class Bank extends Model
     protected $table = 'CHARACTER_01_DBF.dbo.BANK_TBL';
     public $timestamps = false;
     public $incrementing = false;
+    protected $connection = 'sqlsrv';
 
     public function character()
     {
