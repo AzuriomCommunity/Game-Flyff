@@ -11,8 +11,18 @@ class TradeController extends Controller
 {
     public function index(Request $request)
     {
+        $search = $request->input('search');
+
+        $query = Trade::whereHas('firstTradeDetail.character', function (Builder $query) use ($search){
+            $query->where('m_szName', 'like', "%$search%");}
+        )->orWhereHas('secondTradeDetail.character', function (Builder $query) use ($search){
+            $query->where('m_szName', 'like', "%$search%");}
+        );
+        if (is_numeric($search)) {
+            $query->orWhere('TradeID', $search);
+        }
         return view('flyff::admin.trades.index', [
-            'trades' => Trade::paginate(20),
+            'trades' => $query->paginate(20),
         ]);
     }
 
