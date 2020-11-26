@@ -3,6 +3,11 @@
 @section('title', trans('admin.users.title'))
 
 @section('content')
+
+<div class="alert alert-info" role="alert">
+    Both are required : Item ID, quantity
+</div>
+
     <form class="form-inline mb-3" action="{{ route('flyff.admin.lookup') }}" method="GET">
         <div class="form-group mb-2">
             <label for="searchInput" class="sr-only">{{ trans('messages.actions.search') }}</label>
