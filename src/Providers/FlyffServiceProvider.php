@@ -72,6 +72,11 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function boot()
     {
         // $this->registerPolicies();
+        config(['database.connections.sqlsrv.host' => env('SQLSRV_HOST')]);
+        config(['database.connections.sqlsrv.port' => env('SQLSRV_PORT')]);
+        config(['database.connections.sqlsrv.username' => env('SQLSRV_USERNAME')]);
+        config(['database.connections.sqlsrv.password' => env('SQLSRV_PASSWORD')]);
+        config(['database.connections.sqlsrv.database' => 'ACCOUNT_DBF']);
 
         $this->loadViews();
 

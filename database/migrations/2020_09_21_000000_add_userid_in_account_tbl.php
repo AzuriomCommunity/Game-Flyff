@@ -15,31 +15,25 @@ class AddUseridInAccountTbl extends Migration
      */
     public function up()
     {
-        $azuriom_db = config("database.connections.sqlsrv.database");
+        if(empty(env('SQLSRV_HOST')))
+            throw new RuntimeException('Please follow the wiki to properly install the plugin');
+        
         $users = User::all();
         $users->each(function($user){
             $user->access_token = Str::random(128);
             $user->save();
         });
-        
-        config(["database.connections.sqlsrv.database" => 'ACCOUNT_DBF']);
-        DB::purge();
 
-        if(!Schema::hasTable('ACCOUNT_TBL')) {
+        if(!Schema::connection('sqlsrv')->hasTable('ACCOUNT_TBL')) {
             plugins()->disable('flyff');
             throw new RuntimeException('Flyff database has not been setup');
         }
 
-        if(! Schema::hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
-            Schema::table('ACCOUNT_TBL', function (Blueprint $table) {
+        if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
+            Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                 $table->integer('Azuriom_user_id')->nullable();
             });
         }
-
-        
-
-        config(["database.connections.sqlsrv.database" => $azuriom_db]);
-        DB::purge();
     }
 
     /**
