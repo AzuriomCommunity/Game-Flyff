@@ -58,7 +58,15 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function register()
     {
         require_once __DIR__.'/../../vendor/autoload.php';
-        
+
+        config([
+            'database.connections.sqlsrv.host' => env('SQLSRV_HOST'),
+            'database.connections.sqlsrv.port' => env('SQLSRV_PORT'),
+            'database.connections.sqlsrv.username' => env('SQLSRV_USERNAME'),
+            'database.connections.sqlsrv.password' => env('SQLSRV_PASSWORD'),
+            'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
+        ]);
+
         $this->registerMiddlewares();
         GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //
@@ -72,11 +80,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function boot()
     {
         // $this->registerPolicies();
-        config(['database.connections.sqlsrv.host' => env('SQLSRV_HOST')]);
-        config(['database.connections.sqlsrv.port' => env('SQLSRV_PORT')]);
-        config(['database.connections.sqlsrv.username' => env('SQLSRV_USERNAME')]);
-        config(['database.connections.sqlsrv.password' => env('SQLSRV_PASSWORD')]);
-        config(['database.connections.sqlsrv.database' => 'ACCOUNT_DBF']);
 
         $this->loadViews();
 
