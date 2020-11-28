@@ -22,10 +22,6 @@ class AdminController extends Controller
             ->when($search, function (Builder $query, string $search) {
                 $query->scopes(['search' => $search]);
             })->paginate();
-
-        foreach ($users as $user) {
-            $user->refreshActiveBan();
-        }
         
         return view('flyff::admin.index', [
             'users' => $users,
