@@ -94,7 +94,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
 
         Ban::observe(BanObserver::class);
         
-        $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\CheckCharsShop::class);
         $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
         //
     }
@@ -145,7 +144,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         return [
             'flyff' => [
                 'route' => 'flyff.accounts.index',
-                'name' => 'Flyff Accounts',
+                'name' => 'In-Game Accounts',
             ]
         ];
     }
