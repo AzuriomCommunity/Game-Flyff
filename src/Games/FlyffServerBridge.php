@@ -22,22 +22,23 @@ class FlyffServerBridge extends ServerBridge
      */
     public function getServerData()
     {
-        $connected = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
-        $maxPlayerConnected = (int) DB::table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
 
-        return [
-            'players' => $connected,
-            'max_players' => $maxPlayerConnected,
-        ];
+        if(!!@fsockopen($this->server->address, $this->server->port,$errorno, $errorstr, 0.1)) {
+            $connected = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
+            $maxPlayerConnected = (int) DB::table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
+    
+            return [
+                'players' => $connected,
+                'max_players' => $maxPlayerConnected,
+            ];
+        }
+
+        return null;
     }
 
-    /**
-     * We check if the table CHARACTER_01_DBF.dbo.BASE_VALUE_TBL contains atleast one value
-     * it means the flyff database is properly setup and accessible, enough to send items.
-     */
     public function verifyLink()
     {
-        return DB::table('CHARACTER_01_DBF.dbo.BASE_VALUE_TBL')->count() > 0;
+        return !! @fsockopen($this->server->address, $this->server->port, $errorno, $errorstr, 0.1);
     }
 
     /**
