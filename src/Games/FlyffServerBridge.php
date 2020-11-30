@@ -24,8 +24,8 @@ class FlyffServerBridge extends ServerBridge
     {
 
         if(!!@fsockopen($this->server->address, $this->server->port,$errorno, $errorstr, 0.1)) {
-            $connected = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
-            $maxPlayerConnected = (int) DB::table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
+            $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
+            $maxPlayerConnected = (int) DB::connection('sqlsrv')->table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
     
             return [
                 'players' => $connected,
@@ -85,10 +85,10 @@ class FlyffServerBridge extends ServerBridge
     private function getPlayerFallback($user, &$idPlayer, &$idServer)
     {
             //this is the fallback, it gets the first character, not deleted of the Azuriom connected user.
-            $account = DB::table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
+            $account = DB::connection('sqlsrv')->table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
 
-            $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+            $character = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')
                 ->where(
                     [
@@ -103,7 +103,7 @@ class FlyffServerBridge extends ServerBridge
 
     private function playerIsConnected($idPlayer, $idServer)
     {
-        $character = DB::table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+        $character = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
             ->select('MultiServer')
             ->where([ //get first not deleted character
                 ['m_idPlayer', $idPlayer],
@@ -121,7 +121,7 @@ class FlyffServerBridge extends ServerBridge
     {
         foreach ($commands as $command) {
             $id_name_quantity = explode(',', $command);
-            DB::table('CHARACTER_01_DBF.dbo.ITEM_SEND_TBL')
+            DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.ITEM_SEND_TBL')
                 ->insert([
                     'm_idPlayer' => $idPlayer,
                     'serverindex' => $idServer,
