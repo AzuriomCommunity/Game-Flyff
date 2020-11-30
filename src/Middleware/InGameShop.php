@@ -23,12 +23,12 @@ class InGameShop
                 session(['m_nServer'=> (int) request()->m_nServer]);
             }
 
-            if(!auth()->check() && $request->is('/user/login')){
+            if(!auth()->check() && $request->is('user/login')){
                 session()->put('url.intended','/shop');
                 return $next($request);
             }
             
-            if(!auth()->check() && !$request->is('/user/login') )
+            if(!auth()->check() && !$request->is('user/login') )
                 return redirect()->route('login');
                 
         }
