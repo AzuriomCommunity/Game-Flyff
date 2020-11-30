@@ -12,5 +12,32 @@
     },
     "require": {
         "awobaz/compoships": "^2.0"
+    },
+    "replace": {
+        "illuminate/database": "*",
+        "voku/portable-ascii": "*",
+        "symfony/translation-contracts": "*",
+        "symfony/polyfill-php80": "*",
+        "symfony/polyfill-mbstring": "*",
+        "symfony/translation": "*",
+        "nesbot/carbon": "*",
+        "illuminate/macroable": "*",
+        "psr/simple-cache": "*",
+        "psr/container": "*",
+        "illuminate/contracts": "*",
+        "illuminate/collections": "*",
+        "doctrine/inflector": "*",
+        "illuminate/support": "*",
+        "symfony/polyfill-intl-normalizer": "*",
+        "symfony/polyfill-intl-grapheme": "*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/string": "*",
+        "symfony/service-contracts": "*",
+        "symfony/polyfill-php73": "*",
+        "symfony/console": "*",
+        "illuminate/container": "*",
+        "symfony/process": "*",
+        "illuminate/console": "*",
+        "illuminate/cache": "*"
     }
 }
