@@ -5,6 +5,7 @@ use Azuriom\Plugin\Flyff\Controllers\Admin\ItemController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\MailController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\AdminController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\TradeController;
+use Azuriom\Plugin\Flyff\Controllers\Admin\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,10 @@ use Azuriom\Plugin\Flyff\Controllers\Admin\TradeController;
 */
 
 Route::get('/', [AdminController::class, 'index'])->name('index');
+
+Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+
+Route::post('/settings', [SettingController::class, 'update'])->name('settings');
 
 Route::get('/mails', [MailController::class, 'index'])->name('mails');
 
