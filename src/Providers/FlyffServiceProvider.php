@@ -7,7 +7,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Schema;
+use Azuriom\Support\SettingsRepository;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
+use Illuminate\Database\Schema\Blueprint;
 use Azuriom\Providers\GameServiceProvider;
 use Azuriom\Plugin\Flyff\Observers\BanObserver;
 use Azuriom\Plugin\Flyff\Middleware\CheckCharsShop;
@@ -58,15 +61,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function register()
     {
         require_once __DIR__.'/../../vendor/autoload.php';
-
-        config([
-            'database.connections.sqlsrv.host' => env('SQLSRV_HOST'),
-            'database.connections.sqlsrv.port' => env('SQLSRV_PORT'),
-            'database.connections.sqlsrv.username' => env('SQLSRV_USERNAME'),
-            'database.connections.sqlsrv.password' => env('SQLSRV_PASSWORD'),
-            'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
-        ]);
-
+        
         $this->registerMiddlewares();
         GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //
@@ -79,6 +74,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
      */
     public function boot()
     {
+        $this->setupSqlServer();
         // $this->registerPolicies();
 
         $this->loadViews();
@@ -133,6 +129,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 'icon' => 'fas fa-gamepad',
                 'route' => 'flyff.admin.*',
                 'items' => [
+                    'flyff.admin.settings' => 'Settings',
                     'flyff.admin.index' => 'Comptes',
                     'flyff.admin.mails' => 'Mails',
                     'flyff.admin.trades.index' => 'Trades',
@@ -155,5 +152,40 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 'name' => 'In-Game Accounts',
             ]
         ];
+    }
+
+    private function setupSqlServer()
+    {
+        $settings = app(SettingsRepository::class);
+        if(config('database.default') !== 'sqlsrv') {
+            //The SqlServer connection has to be setup for every requests if the default is not sqlsrv
+            if($settings->has('flyff.sqlsrv_host')) {
+                config([
+                    'database.connections.sqlsrv.host' => $settings->get('flyff.sqlsrv_host', ''),
+                    'database.connections.sqlsrv.port' => $settings->get('flyff.sqlsrv_port', ''),
+                    'database.connections.sqlsrv.username' => $settings->get('flyff.sqlsrv_username', ''),
+                    'database.connections.sqlsrv.password' => $settings->get('flyff.sqlsrv_password', ''),
+                    'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
+                ]);
+            } else {
+                //TODO: the settings are not setup, maybe add middleware that will redirect to flyff.admin.settings
+            }
+        } else {
+            //The default connection is sqlsrv, so do the migration and setup now since we have everything we need
+            if(!$settings->has('flyff.sqlsrv_host')) {
+                $settings->updateSettings([
+                    'flyff.sqlsrv_host' => config('database.connections.sqlsrv.host'),
+                    'flyff.sqlsrv_port' => config('database.connections.sqlsrv.port'),
+                    'flyff.sqlsrv_username' => config('database.connections.sqlsrv.username'),
+                    'flyff.sqlsrv_password' => config('database.connections.sqlsrv.password'),
+                ]);
+
+                if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
+                    Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
+                        $table->integer('Azuriom_user_id')->nullable();
+                    });
+                }
+            }
+        }
     }
 }
