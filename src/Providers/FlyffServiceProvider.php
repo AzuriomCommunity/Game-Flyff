@@ -3,7 +3,9 @@
 namespace Azuriom\Plugin\Flyff\Providers;
 
 use Azuriom\Models\Ban;
+use Azuriom\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -99,6 +101,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         Ban::observe(BanObserver::class);
         
         $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
+        $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\CheckSqlSrv::class);
         //
     }
 
@@ -173,18 +176,25 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         } else {
             //The default connection is sqlsrv, so do the migration and setup now since we have everything we need
             if(!$settings->has('flyff.sqlsrv_host')) {
-                $settings->updateSettings([
+                Setting::updateSettings([
                     'flyff.sqlsrv_host' => config('database.connections.sqlsrv.host'),
                     'flyff.sqlsrv_port' => config('database.connections.sqlsrv.port'),
                     'flyff.sqlsrv_username' => config('database.connections.sqlsrv.username'),
                     'flyff.sqlsrv_password' => config('database.connections.sqlsrv.password'),
                 ]);
 
+                $database = config('database.connections.sqlsrv.database');
+
+                config(['database.connections.sqlsrv.database' => 'ACCOUNT_DBF']);
+                DB::purge();
+
                 if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
                     Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                         $table->integer('Azuriom_user_id')->nullable();
                     });
                 }
+                config(['database.connections.sqlsrv.database' => $database]);
+                DB::purge();
             }
         }
     }
