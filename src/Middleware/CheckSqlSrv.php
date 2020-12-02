@@ -8,7 +8,7 @@ class CheckSqlSrv
 {
     public function handle($request, Closure $next)
     {
-        if(!setting()->has('flyff.sqlsrv_host'))
+        if(!setting()->has('flyff.sqlsrv_host') && plugins()->isEnabled('flyff'))
         {
             if($request->is('admin/flyff/settings') || $request->is('admin/plugins*'))
                 return $next($request);
