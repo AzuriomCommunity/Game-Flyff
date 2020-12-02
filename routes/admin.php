@@ -23,7 +23,7 @@ Route::get('/', [AdminController::class, 'index'])->name('index');
 
 Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 
-Route::post('/settings', [SettingController::class, 'update'])->name('settings');
+Route::post('/settings', [SettingController::class, 'update'])->name('settings_update');
 
 Route::get('/mails', [MailController::class, 'index'])->name('mails');
 

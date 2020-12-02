@@ -5,7 +5,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-body">     
-        <form action="{{ route('flyff.admin.settings') }}" method="POST">
+        <form action="{{ route('flyff.admin.settings_update') }}" method="POST">
             @csrf
 
             <div class="form-group">
