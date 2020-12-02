@@ -170,8 +170,9 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     'database.connections.sqlsrv.password' => $settings->get('flyff.sqlsrv_password', ''),
                     'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
                 ]);
+                DB::purge();
             } else {
-                //TODO: the settings are not setup, maybe add middleware that will redirect to flyff.admin.settings
+                //The middleware should redirect to settings to setup the connection
             }
         } else {
             //The default connection is sqlsrv, so do the migration and setup now since we have everything we need
