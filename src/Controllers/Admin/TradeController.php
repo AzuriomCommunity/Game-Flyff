@@ -40,12 +40,4 @@ class TradeController extends Controller
             'search' => $search
         ]);
     }
-
-
-    public function show (Trade $trade)
-    {
-        return view('flyff::admin.trades.show', [
-            'trade' => $trade,
-        ]);
-    }
 }

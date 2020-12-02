@@ -31,7 +31,6 @@ Route::get('/items/lookup', [ItemController::class, 'index'])->name('lookup');
 
 Route::prefix('trades')->name('trades.')->group(function(){
     Route::get('/', [TradeController::class, 'index'])->name('index');
-    Route::get('/{trade}', [TradeController::class, 'show'])->name('show');
 });
 
 
