@@ -9,4 +9,7 @@ You can then follow the wiki : https://github.com/AzuriomCommunity/Game-Flyff/wi
 
  ### Salt for password
  
- You can change the default salt of 'kikugalanet' in your .env for exemple `MD5_HASH_KEY=my-new-salt`
+ You can change the default salt of 'kikugalanet' in your .env (root folder of azuriom)
+
+Simply past this inside:
+ `MD5_HASH_KEY=my-new-salt`
