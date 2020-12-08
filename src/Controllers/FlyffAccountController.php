@@ -20,7 +20,6 @@ class FlyffAccountController extends Controller
             'password' => $validatedData['password'],
             'isuse' => 'T',
             'member' => 'A',
-            'id_no2' => $validatedData['password'],
             'realname' => '',
             'Azuriom_user_id' => auth()->id(),
         ]);
