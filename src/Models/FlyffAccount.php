@@ -19,12 +19,7 @@ class FlyffAccount extends Model
         'password',
         'isuse',
         'member',
-        'id_no1',
-        'id_no2',
         'realname',
-        'reload',
-        'OldPassword',
-        'TempPassword',
         'Azuriom_user_id',
     ];
 
@@ -48,6 +43,11 @@ class FlyffAccount extends Model
         return $this->hasMany(FlyffCharacter::class, 'account', 'account');
     }
 
+    /**
+     * Return the Azuriom user.
+     *
+     * @return \Azuriom\Plugin\Flyff\Models\User
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'Azuriom_user_id');

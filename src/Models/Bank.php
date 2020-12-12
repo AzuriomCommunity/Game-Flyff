@@ -12,6 +12,11 @@ class Bank extends Model
     public $incrementing = false;
     protected $connection = 'sqlsrv';
 
+    /**
+     * Return the character that owns $this.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function character()
     {
         return $this->belongsTo(FlyffCharacter::class, 'm_idPlayer', 'm_idPlayer')->withoutGlobalScopes(['valid']);

@@ -26,7 +26,8 @@ class Trade extends Model
         'TradeDt',
     ];
 
-    public function getRouteKeyName() {
+    public function getRouteKeyName()
+    {
         return 'TradeID';
     }
 

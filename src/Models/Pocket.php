@@ -15,6 +15,6 @@ class Pocket extends Model
 
     public function character()
     {
-        return $this->belongsTo(FlyffCharacter::class, 'idPlayer', 'm_idPlayer' )->withoutGlobalScopes(['valid']);
+        return $this->belongsTo(FlyffCharacter::class, 'idPlayer', 'm_idPlayer')->withoutGlobalScopes(['valid']);
     }
 }

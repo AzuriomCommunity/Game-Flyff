@@ -19,7 +19,7 @@ class TradeDetail extends Model
 
     public function character()
     {
-        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idPlayer')->withoutGlobalScopes(['valid']);
+        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer', 'idPlayer')->withoutGlobalScopes(['valid']);
     }
 
     /**
@@ -28,6 +28,6 @@ class TradeDetail extends Model
      */
     public function sentItems()
     {
-        return $this->hasMany(TradeItem::class, ['TradeID','idPlayer'],['TradeID','idPlayer']);
+        return $this->hasMany(TradeItem::class, ['TradeID','idPlayer'], ['TradeID','idPlayer']);
     }
 }

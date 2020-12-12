@@ -30,12 +30,13 @@ class ApiController extends Controller
         $user = User::ofUser($baseUser);
         $character = $user->characters()->where('m_szName', $request->input('playerName'))->first();
 
-        if($character === null) { //tried to save an image for another player.
+        if ($character === null) { //tried to save an image for another player.
             return response()->json(['status' => false, 'message' => 'Unkown character'], 422);
         }
 
         $request->file('avatar')->storeAs(
-            "public/flyff/avatars/{$user->id}", $request->input('playerName').'.png'
+            "public/flyff/avatars/{$user->id}",
+            $request->input('playerName').'.png'
         );
         return response()->json('Hello World!');
     }

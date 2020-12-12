@@ -22,7 +22,7 @@ class FlyffServerBridge extends ServerBridge
      */
     public function getServerData()
     {
-        if(@fsockopen($this->server->address, $this->server->port,$errorno, $errorstr, 0.1)) {
+        if (@fsockopen($this->server->address, $this->server->port, $errorno, $errorstr, 0.1)) {
             $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
             $maxPlayerConnected = (int) DB::connection('sqlsrv')->table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
     
@@ -42,10 +42,14 @@ class FlyffServerBridge extends ServerBridge
 
     /**
      * $m_idPlayer and $m_nServer are set if the user open the shop in-game
-     * using session vars set in the default theme.
+     * using Azuriom\Plugin\Flyff\Middleware\InGameShop
      *
-     * $playerNameIfNavigator is set with the theme when the user buy in the shop
-     * outside of the game, from his phone for example.
+     * In case the shop is open from a navigator the player should be changed
+     * using FlyffCharacterController.shop_update_character
+     * otherwise it will fallBack to the first non deleted character
+     *
+     * $command should look like : 26228,Elixir of Stone,1
+     * which is : id,name,quantity.
      */
     public function sendCommands(array $commands, User $user = null, bool $needConnected = false)
     {
@@ -55,7 +59,6 @@ class FlyffServerBridge extends ServerBridge
 
         $idPlayer = session('m_idPlayer');
         $idServer = session('m_nServer');
-        $playerNameIfNavigator = request()->flyff_player_name;
 
         if (empty($idPlayer) || empty($idServer)) {
             $this->getPlayerFallback($user, $idPlayer, $idServer);
@@ -81,23 +84,25 @@ class FlyffServerBridge extends ServerBridge
         return self::DEFAULT_PORT;
     }
 
+    /**
+     * Gets the first character, not deleted of the Azuriom connected user.
+     */
     private function getPlayerFallback($user, &$idPlayer, &$idServer)
     {
-            //this is the fallback, it gets the first character, not deleted of the Azuriom connected user.
-            $account = DB::connection('sqlsrv')->table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
+        $account = DB::connection('sqlsrv')->table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
                 ->select('account')->where('Azuriom_user_id', $user->id)->first();
 
-            $character = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+        $character = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
                 ->select('m_idPlayer', 'serverindex', 'MultiServer')
                 ->where(
                     [
                         ['account', $account->account],
                         ['isblock', 'F'],
-                    ])->first();
+                    ]
+                )->first();
 
-            $idPlayer = $character->m_idPlayer;
-            $idServer = $character->serverindex;
-        
+        $idPlayer = $character->m_idPlayer;
+        $idServer = $character->serverindex;
     }
 
     private function playerIsConnected($idPlayer, $idServer)
@@ -112,10 +117,6 @@ class FlyffServerBridge extends ServerBridge
         return $character->MultiServer === '1';
     }
 
-    /**
-     * $command should look like : 26228,Elixir of Stone,1
-     * which is : id,name,quantity.
-     */
     private function sendItemsWithDatabase($idPlayer, $idServer, $commands)
     {
         foreach ($commands as $command) {

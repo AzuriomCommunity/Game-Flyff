@@ -13,24 +13,24 @@ class TradeController extends Controller
     {
         $search = $request->input('search');
 
-        $bigQuery = Trade::whereHas('firstTradeDetail.character', function (Builder $query) use ($search){
+        $bigQuery = Trade::whereHas('firstTradeDetail.character', function (Builder $query) use ($search) {
             $query->where('m_szName', 'like', "%$search%");
-        })->orWhereHas('secondTradeDetail.character', function (Builder $query) use ($search){
+        })->orWhereHas('secondTradeDetail.character', function (Builder $query) use ($search) {
             $query->where('m_szName', 'like', "%$search%");
         });
 
         if (is_numeric($search)) {
             $bigQuery->orWhere('TradeID', $search);
-            $bigQuery->orWhereHas('firstTradeDetail', function (Builder $query) use ($search){
+            $bigQuery->orWhereHas('firstTradeDetail', function (Builder $query) use ($search) {
                 $query->where('TradeGold', $search);
             });
-            $bigQuery->orWhereHas('secondTradeDetail', function (Builder $query) use ($search){
+            $bigQuery->orWhereHas('secondTradeDetail', function (Builder $query) use ($search) {
                 $query->where('TradeGold', $search);
             });
-            $bigQuery->orWhereHas('firstTradeDetail.sentItems', function (Builder $query) use ($search){
+            $bigQuery->orWhereHas('firstTradeDetail.sentItems', function (Builder $query) use ($search) {
                 $query->where('ItemIndex', $search);
             });
-            $bigQuery->orWhereHas('secondTradeDetail.sentItems', function (Builder $query) use ($search){
+            $bigQuery->orWhereHas('secondTradeDetail.sentItems', function (Builder $query) use ($search) {
                 $query->where('ItemIndex', $search);
             });
         }

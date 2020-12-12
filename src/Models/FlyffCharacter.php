@@ -114,18 +114,22 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
  * @property Carbon CreateTime
  * @property Carbon FinalLevelDt
  *
- * @property PropJob job
- * @property string sex_icon
- * @property string sex_title
- * @property int master_rank
- * @property bool has_master_rank
- * @property bool is_valid
- * @property string total_time_played
+ * @property FlyffAccount flyffAccount
+ * @property FlyffGuildMember guildMember
+ * @property FlyffGuild guild
+ * @property Bank bank
+ * @property Mail mails
+ * @property Pocket pocket
+ * @property Inventory inventory
  *
- * @property Account account
- * @property GuildMember guildMember
- * @property Guild guild
- * @property MultiServerInfo onlineInfo
+ * @property string SexIcon
+ * @property int MasterRank
+ * @property bool HasMasterRank
+ * @property string TotalTimePlayed
+ * @property string AvatarUrl
+ * @property string JobName
+ * @property string JobIcon
+ * @property string WorldName
  *
  * @method static Builder valid()
  */
@@ -239,7 +243,8 @@ class FlyffCharacter extends Model
         'FinalLevelDt',
     ];
 
-    public function getRouteKeyName() {
+    public function getRouteKeyName()
+    {
         return 'm_szName';
     }
 
@@ -260,7 +265,7 @@ class FlyffCharacter extends Model
      */
     public function guild()
     {
-        return $this->hasOneThrough(FlyffGuild::class, FlyffGuildMember::class, 'm_idPlayer', 'm_idGuild',  'm_idPlayer', 'm_idGuild');
+        return $this->hasOneThrough(FlyffGuild::class, FlyffGuildMember::class, 'm_idPlayer', 'm_idGuild', 'm_idPlayer', 'm_idGuild');
     }
 
     /**
@@ -280,7 +285,8 @@ class FlyffCharacter extends Model
      */
     public function getSexIconAttribute(): string
     {
-        return plugin_asset('flyff', "img/sex_icons/{$this->m_dwSex}.png");;
+        return plugin_asset('flyff', "img/sex_icons/{$this->m_dwSex}.png");
+        ;
     }
 
     /**
@@ -342,8 +348,9 @@ class FlyffCharacter extends Model
 
     public function getAvatarUrlAttribute()
     {
-        if(Storage::exists("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png"))
+        if (Storage::exists("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png")) {
             return Storage::url("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png");
+        }
             
         return plugin_asset('flyff', 'img/unknown_avatar.png');
     }

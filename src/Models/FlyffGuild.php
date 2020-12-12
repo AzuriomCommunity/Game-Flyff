@@ -38,8 +38,8 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
  * @property int max_members_count
  * @property string penyas
  *
- * @property Character leader
- * @property Collection members
+ * @property FlyffCharacter leader
+ * @property FlyffGuildMember members
  */
 class FlyffGuild extends Model
 {
@@ -83,7 +83,8 @@ class FlyffGuild extends Model
         'CreateTime',
     ];
 
-    public function getRouteKeyName() {
+    public function getRouteKeyName()
+    {
         return 'm_szGuild';
     }
 
@@ -124,8 +125,9 @@ class FlyffGuild extends Model
 
     public function getIconAttribute(): string
     {
-        if($this->HasIcon)
+        if ($this->HasIcon) {
             return plugin_asset('flyff', "img/guild/icons/{$this->m_dwLogo}.jpg");
+        }
 
         return plugin_asset('flyff', "img/guild/icons/unknown.png");
     }
@@ -207,5 +209,4 @@ class FlyffGuild extends Model
         49 => 77,
         50 => 80,
     ];
-
 }

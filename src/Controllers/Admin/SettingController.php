@@ -27,7 +27,6 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-
         DB::purge();
 
         config([
@@ -51,7 +50,7 @@ class SettingController extends Controller
             'flyff.sqlsrv_password' => $request->input('sqlsrv_password'),
         ]);
 
-        if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
+        if (! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
             Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                 $table->integer('Azuriom_user_id')->nullable();
             });

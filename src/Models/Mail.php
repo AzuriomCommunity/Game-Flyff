@@ -15,11 +15,11 @@ class Mail extends Model
 
     public function sender()
     {
-        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idSender')->withoutGlobalScopes(['valid']);
+        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer', 'idSender')->withoutGlobalScopes(['valid']);
     }
 
     public function receiver()
     {
-        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer','idReceiver')->withoutGlobalScopes(['valid']);
+        return $this->hasOne(FlyffCharacter::class, 'm_idPlayer', 'idReceiver')->withoutGlobalScopes(['valid']);
     }
 }

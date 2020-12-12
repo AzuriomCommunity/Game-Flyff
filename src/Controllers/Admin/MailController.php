@@ -12,11 +12,11 @@ class MailController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $bigQuery = Mail::whereHas('receiver', function (Builder $query) use ($search){
+        $bigQuery = Mail::whereHas('receiver', function (Builder $query) use ($search) {
             $query->where('m_szName', 'like', "%$search%");
-        })->orWhereHas('sender', function (Builder $query) use ($search){
+        })->orWhereHas('sender', function (Builder $query) use ($search) {
             $query->where('m_szName', 'like', "%$search%");
-        })->orWhere('szTitle' , 'like', "%$search%");
+        })->orWhere('szTitle', 'like', "%$search%");
         
         if (is_numeric($search)) {
             $bigQuery->orWhere('dwItemId', $search);
@@ -28,5 +28,4 @@ class MailController extends Controller
             'search' => $search
         ]);
     }
-
 }

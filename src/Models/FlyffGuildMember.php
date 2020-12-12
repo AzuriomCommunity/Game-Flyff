@@ -27,8 +27,8 @@ use Azuriom\Games\Others\Servers\FlyffServerBridge;
  * @property string rank_logo
  * @property string rank_title
  *
- * @property Guild guild
- * @property Character character
+ * @property FlyffGuild guild
+ * @property FlyffCharacter character
  */
 class FlyffGuildMember extends Model
 {
@@ -80,7 +80,7 @@ class FlyffGuildMember extends Model
 
     public function getRankIconAttribute(): ?string
     {
-       return plugin_asset('flyff', "img/guild/ranks/{$this->m_nMemberLv}.png"); 
+        return plugin_asset('flyff', "img/guild/ranks/{$this->m_nMemberLv}.png");
     }
 
     /**
