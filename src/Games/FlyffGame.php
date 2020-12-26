@@ -14,6 +14,7 @@ class FlyffGame extends Game
     {
         return 'Flyff';
     }
+    public function id(){ return 'flyff';}
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
