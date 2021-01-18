@@ -3,6 +3,7 @@
 return [
     'guilds' => 'Guildes',
     'characters' => 'Personnages',
+    'game-accounts' => 'Comptes de Jeu',
     'jobs' => [
         '0' => 'Vagabond',
         '1' => 'Mercenaire', //Job 15-60

@@ -152,7 +152,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         return [
             'flyff' => [
                 'route' => 'flyff.accounts.index',
-                'name' => 'In-Game Accounts',
+                'name' => 'flyff::messages.game-accounts',
             ]
         ];
     }
