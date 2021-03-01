@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Flyff\Providers;
 use Azuriom\Models\Ban;
 use Azuriom\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
@@ -14,8 +15,10 @@ use Azuriom\Support\SettingsRepository;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
 use Illuminate\Database\Schema\Blueprint;
 use Azuriom\Providers\GameServiceProvider;
+use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Observers\BanObserver;
 use Azuriom\Plugin\Flyff\Middleware\CheckCharsShop;
+use Azuriom\Plugin\Flyff\Models\FlyffAccountDetail;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Plugin\Flyff\View\Composers\FlyffAdminDashboardComposer;
 
@@ -95,6 +98,32 @@ class FlyffServiceProvider extends BasePluginServiceProvider
 
         Event::listen(function (Registered $event) {
             $event->user->access_token = Str::random(128);
+            $settings = app(SettingsRepository::class);
+            if($settings->has('flyff.sqlsrv_host')) {
+                $password = flyff_hash_mdp(request()->input('password'));
+                FlyffAccount::query()->create([
+                    'account' => request()->input('name'),
+                    'password' => $password,
+                    'isuse' => 'T',
+                    'member' => 'A',
+                    'realname' => '',
+                    'Azuriom_user_id' => $event->user->id,
+                    'Azuriom_user_access_token' => Str::random(128)
+                ]);
+        
+                FlyffAccountDetail::query()->create([
+                    'account' => request()->input('name'),
+                    'gamecode' => 'A000',
+                    'tester' => '2',
+                    'm_chLoginAuthority' => 'F',
+                    'regdate' => Carbon::now(),
+                    'BlockTime' => '0',
+                    'EndTime' => '0',
+                    'WebTime' => '0',
+                    'isuse' => 'O',
+                    'email' => '',
+                ]);
+            }
             $event->user->save();
         });
 
@@ -192,6 +221,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
                     Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                         $table->integer('Azuriom_user_id')->nullable();
+                        $table->string('Azuriom_user_access_token')->nullable();
                     });
                 }
                 config(['database.connections.sqlsrv.database' => $database]);

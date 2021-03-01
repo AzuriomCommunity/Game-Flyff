@@ -21,6 +21,7 @@ class FlyffAccount extends Model
         'member',
         'realname',
         'Azuriom_user_id',
+        'Azuriom_user_access_token'
     ];
 
     /**

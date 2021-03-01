@@ -53,6 +53,7 @@ class SettingController extends Controller
         if (! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
             Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                 $table->integer('Azuriom_user_id')->nullable();
+                $table->string('Azuriom_user_access_token')->nullable();
             });
         }
 

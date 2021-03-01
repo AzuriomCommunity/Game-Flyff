@@ -7,6 +7,7 @@ use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Models\FlyffAccountDetail;
 use Azuriom\Plugin\Flyff\Requests\FlyffAccountRequest;
+use Illuminate\Support\Str;
 
 class FlyffAccountController extends Controller
 {
@@ -22,6 +23,7 @@ class FlyffAccountController extends Controller
             'member' => 'A',
             'realname' => '',
             'Azuriom_user_id' => auth()->id(),
+            'Azuriom_user_access_token' => Str::random(128)
         ]);
 
         FlyffAccountDetail::query()->create([

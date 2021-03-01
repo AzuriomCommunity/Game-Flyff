@@ -20,12 +20,6 @@ class AddUseridInAccountTbl extends Migration
             plugins()->disable('flyff');
             throw new RuntimeException('sqlsrv and pdo_sqlsrv extensions are missing or you are using the wrong version');
         }
-        
-        $users = User::all();
-        $users->each(function($user){
-            $user->access_token = Str::random(128);
-            $user->save();
-        });
 
     }
 
