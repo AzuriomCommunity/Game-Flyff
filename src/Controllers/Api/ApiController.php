@@ -3,7 +3,7 @@
 namespace Azuriom\Plugin\Flyff\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Azuriom\Plugin\Flyff\Models\User;
+use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Requests\UploadAvatarRequest;
 
@@ -16,7 +16,7 @@ class ApiController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::firstWhere('Azuriom_user_access_token', $request->input('access_token'));
+        $user = FlyffAccount::firstWhere('Azuriom_user_access_token', $request->input('access_token'));
 
         if ($user === null) {
             return response()->json(['status' => false, 'message' => 'Invalid token'], 422);
