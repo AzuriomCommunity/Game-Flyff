@@ -15,7 +15,7 @@ class FlyffCharacterController extends Controller
      */
     public function index()
     {
-        $characters = FlyffCharacter::paginate(50);
+        $characters = FlyffCharacter::orderBy('TotalPlayTime', 'desc')->paginate(50);
         return view('flyff::characters.index', ['characters' => $characters]);
     }
 

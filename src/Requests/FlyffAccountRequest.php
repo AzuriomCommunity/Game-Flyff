@@ -19,7 +19,7 @@ class FlyffAccountRequest extends FormRequest
         
 
         return [
-            'account' => ['required', 'string', 'max:25', 
+            'account' => ['required', 'string', 'max:25', 'regex:/^[A-Za-z0-9]+$/u',
                 function ($attribute, $value, $fail) {
                     $test = FlyffAccount::where('account', $value)->first();
                     if ($test) {
@@ -27,7 +27,7 @@ class FlyffAccountRequest extends FormRequest
                     }
                 }
             ],
-            'password' => ['required', 'string', 'min:3', 'confirmed'],
+            'password' => ['required', 'string', 'min:8','max:16', 'regex:/^[A-Za-z0-9]+$/u','confirmed'],
         ];
     }
 }

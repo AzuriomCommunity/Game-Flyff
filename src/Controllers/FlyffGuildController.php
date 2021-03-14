@@ -14,7 +14,7 @@ class FlyffGuildController extends Controller
      */
     public function index()
     {
-        $guilds = FlyffGuild::paginate(10);
+        $guilds = FlyffGuild::orderBy('m_nWin', 'desc')->paginate(10);
         return view('flyff::guilds.index', ['guilds' => $guilds]);
     }
 

@@ -7,6 +7,7 @@ use Azuriom\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Schema;
 use Azuriom\Support\SettingsRepository;
 use Azuriom\Plugin\Flyff\Games\FlyffGame;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Validator;
 use Azuriom\Providers\GameServiceProvider;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Observers\BanObserver;
@@ -99,32 +101,44 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         Event::listen(function (Registered $event) {
             $event->user->access_token = Str::random(128);
             $settings = app(SettingsRepository::class);
-            if($settings->has('flyff.sqlsrv_host')) {
-                $password = flyff_hash_mdp(request()->input('password'));
-                FlyffAccount::query()->create([
-                    'account' => request()->input('name'),
-                    'password' => $password,
-                    'isuse' => 'T',
-                    'member' => 'A',
-                    'realname' => '',
-                    'Azuriom_user_id' => $event->user->id,
-                    'Azuriom_user_access_token' => Str::random(128)
-                ]);
-        
-                FlyffAccountDetail::query()->create([
-                    'account' => request()->input('name'),
-                    'gamecode' => 'A000',
-                    'tester' => '2',
-                    'm_chLoginAuthority' => 'F',
-                    'regdate' => Carbon::now(),
-                    'BlockTime' => '0',
-                    'EndTime' => '0',
-                    'WebTime' => '0',
-                    'isuse' => 'O',
-                    'email' => '',
-                ]);
+
+            $validator = Validator::make(request()->all(), [
+                'name' => ['string', 'max:25', 'regex:/^[A-Za-z0-9]+$/u'],
+                'password' => ['required', 'string', 'min:8','max:16','regex:/^[A-Za-z0-9]+$/u'],
+            ]);
+       
+            if ($validator->fails()) {
+                Auth::logout();
+                $event->user->delete();
+                abort(redirect()->back()->withErrors($validator)->withInput());
+            } else {
+                if($settings->has('flyff.sqlsrv_host')) {
+                    $password = flyff_hash_mdp(request()->input('password'));
+                    FlyffAccount::query()->create([
+                        'account' => request()->input('name'),
+                        'password' => $password,
+                        'isuse' => 'T',
+                        'member' => 'A',
+                        'realname' => '',
+                        'Azuriom_user_id' => $event->user->id,
+                        'Azuriom_user_access_token' => Str::random(128)
+                    ]);
+
+                    FlyffAccountDetail::query()->create([
+                        'account' => request()->input('name'),
+                        'gamecode' => 'A000',
+                        'tester' => '2',
+                        'm_chLoginAuthority' => 'F',
+                        'regdate' => Carbon::now(),
+                        'BlockTime' => '0',
+                        'EndTime' => '0',
+                        'WebTime' => '0',
+                        'isuse' => 'O',
+                        'email' => '',
+                    ]);
+                }
+                $event->user->save();
             }
-            $event->user->save();
         });
 
         Ban::observe(BanObserver::class);
