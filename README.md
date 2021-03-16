@@ -18,3 +18,6 @@ Only If you used the plugin before and the current plugin version is below 0.2.3
 
 Simply past this inside:
  `MD5_HASH_KEY=my-new-salt`
+
+# Support/Questions
+Feel free to contact me on discord `Jav#7775`
