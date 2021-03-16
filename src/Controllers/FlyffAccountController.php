@@ -41,4 +41,25 @@ class FlyffAccountController extends Controller
 
         return redirect()->route('flyff.accounts.index')->with('success', 'Account created');
     }
+
+    public function edit(FlyffAccount $account)
+    {
+        abort_if($account->Azuriom_user_id != auth()->id(), 403);
+
+        return view('flyff::change-password', ['account'=>$account]);
+    }
+
+    public function update(FlyffAccount $account)
+    {
+        abort_if($account->Azuriom_user_id != auth()->id(), 403);
+
+        $validated = $this->validate(request(), [
+            'password' => ['required', 'string', 'min:8','max:16', 'regex:/^[A-Za-z0-9]+$/u','confirmed']
+        ]);
+
+        $account->password = flyff_hash_mdp($validated['password']);
+        $account->save();
+
+        return redirect()->route('flyff.accounts.index')->with('success', 'Password changed');
+    }
 }

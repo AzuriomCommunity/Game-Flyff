@@ -12,6 +12,7 @@
                             <th scope="col">Account Name</th>
                             <th scope="col">Role</th>
                             <th scope="col"># of characters</th>
+                            <th scope="col">{{ trans('messages.fields.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,6 +21,9 @@
                                 <td>{{$item->account}}</td>
                                 <td>{{$item->member}}</td>
                                 <td>{{$item->characters()->count()}}</td>
+                                <td>
+                                    <a href="{{route('flyff.accounts.edit', $item)}}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

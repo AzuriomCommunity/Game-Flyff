@@ -21,6 +21,8 @@ use Azuriom\Plugin\Flyff\Controllers\FlyffCharacterController;
 Route::prefix('accounts')->name('accounts.')->middleware('auth')->group(function () {
     Route::get('/', [FlyffHomeController::class, 'index'])->name('index');
     Route::post('/', [FlyffAccountController::class, 'store'])->name('store');
+    Route::get('/{account}', [FlyffAccountController::class, 'edit'])->name('edit');
+    Route::post('/{account}/change-password', [FlyffAccountController::class, 'update'])->name('change-password');
 });
 
 Route::prefix('guilds')->name('guilds.')->group(function(){
