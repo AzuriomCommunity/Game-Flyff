@@ -43,7 +43,7 @@ class BanObserver
             $account->detail->save();
         });
 
-        $user->characters->each(function ($character) {
+        $user->characters()->withoutGlobalScopes(['valid'])->get()->each(function ($character) {
             $character->isblock = 'F';
             $character->save();
         });
