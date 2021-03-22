@@ -4,6 +4,7 @@
 - A working Flyff server
 - A working Webserver (apache, nginx)
 - Dowload the `flyff.zip` : https://github.com/AzuriomCommunity/Game-Flyff/releases/latest
+
 You can then follow the wiki : https://github.com/AzuriomCommunity/Game-Flyff/wiki
 
 ## Updates
