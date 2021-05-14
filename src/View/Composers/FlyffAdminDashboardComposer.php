@@ -11,23 +11,33 @@ class FlyffAdminDashboardComposer extends AdminDashboardCardComposer
 {
     public function getCards()
     {
+        try {
+            $user_count = FlyffAccount::count();
+            $guild_count = FlyffGuild::count();
+            $character_count = FlyffCharacter::count();
+        } catch (\Throwable $th) {
+            $user_count = 0;
+            $guild_count = 0;
+            $character_count = 0;
+        }
+
         return [
             'flyff_accounts' => [
                 'color' => 'warning',
                 'name' => 'user\'s account',
-                'value' => FlyffAccount::count(),
+                'value' => $user_count,
                 'icon' => 'fas fa-money-bill-wave',
             ],
             'created_guilds' => [
                 'color' => 'warning',
                 'name' => 'in-game guilds',
-                'value' => FlyffGuild::count(),
+                'value' => $guild_count,
                 'icon' => 'fas fa-money-bill-wave',
             ],
             'flyff_characters' => [
                 'color' => 'warning',
                 'name' => 'in-game characters',
-                'value' => FlyffCharacter::count(),
+                'value' => $character_count,
                 'icon' => 'fas fa-money-bill-wave',
             ],
         ];

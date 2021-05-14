@@ -35,6 +35,6 @@ class FlyffCharacterController extends Controller
         session(['m_idPlayer' => (int) $id_serverindex[0]]);
         session(['m_nServer'=> (int) $id_serverindex[1]]);
 
-        return redirect()->route('shop.cart.index')->with('success', 'Player changed');
+        return redirect()->back()->with('success', 'Player changed');
     }
 }
