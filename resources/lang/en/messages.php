@@ -4,6 +4,7 @@ return [
     'guilds' => 'Guilds',
     'characters' => 'Characters',
     'game-accounts' => 'In-Game Accounts',
+    'character-changed' => 'Character changed succesfully',
     'jobs' => [
         '0' => 'Vagrant',
         '1' => 'Mercenary', //Job 15-60
