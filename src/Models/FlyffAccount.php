@@ -12,6 +12,7 @@ class FlyffAccount extends Model
     public $timestamps = false;
     public $incrementing = false;
     protected $primaryKey = 'account';
+    protected $keyType = 'string';
     protected $connection = 'sqlsrv';
     
     protected $fillable = [

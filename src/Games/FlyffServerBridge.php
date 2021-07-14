@@ -6,6 +6,7 @@ use RuntimeException;
 use Azuriom\Models\User;
 use Azuriom\Games\ServerBridge;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Azuriom\Plugin\Shop\Models\User as ShopUser;
 
 /**
@@ -23,7 +24,12 @@ class FlyffServerBridge extends ServerBridge
     public function getServerData()
     {
         if (@fsockopen($this->server->address, $this->server->port, $errorno, $errorstr, 0.1)) {
-            $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
+            $connected = 0;
+            if (Schema::connection('sqlsrv')->hasTable('CHARACTER_01_DBF.dbo.tblMultiServerInfo')) {
+                $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.tblMultiServerInfo')->where('MultiServer', '1')->count();
+            } else {
+                $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
+            }
             $maxPlayerConnected = (int) DB::connection('sqlsrv')->table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
     
             return [
@@ -107,14 +113,21 @@ class FlyffServerBridge extends ServerBridge
 
     private function playerIsConnected($idPlayer, $idServer)
     {
-        $character = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
-            ->select('MultiServer')
-            ->where([ //get first not deleted character
-                ['m_idPlayer', $idPlayer],
-                ['serverindex', $idServer],
-            ])->first();
-
-        return $character->MultiServer === '1';
+        if (Schema::connection('sqlsrv')->hasTable('CHARACTER_01_DBF.dbo.tblMultiServerInfo')) {
+            return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.tblMultiServerInfo')
+                ->where([
+                    ['m_idPlayer', $idPlayer],
+                    ['serverindex', $idServer],
+                    ['MultiServer', 1],
+                ])->exists();
+        } else {
+            return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+                ->where([
+                    ['m_idPlayer', $idPlayer],
+                    ['serverindex', $idServer],
+                    ['MultiServer', 1],
+                ])->exists();
+        }
     }
 
     private function sendItemsWithDatabase($idPlayer, $idServer, $commands)
