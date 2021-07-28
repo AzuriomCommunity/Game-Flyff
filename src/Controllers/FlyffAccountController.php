@@ -2,12 +2,13 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Models\FlyffAccountDetail;
 use Azuriom\Plugin\Flyff\Requests\FlyffAccountRequest;
-use Illuminate\Support\Str;
 
 class FlyffAccountController extends Controller
 {
@@ -40,6 +41,28 @@ class FlyffAccountController extends Controller
         ]);
 
         return redirect()->route('flyff.accounts.index')->with('success', 'Account created');
+    }
+
+    public function link(Request $request)
+    {
+        $validated = $request->validate([
+            'account' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $account = FlyffAccount::firstWhere('account', $validated['account']);
+
+        $hash = flyff_hash_mdp($validated['password']);
+
+        if ($account !== null && $account->password === $hash) {
+            $account->Azuriom_user_id = auth()->id();
+            $account->Azuriom_user_access_token = Str::random(128);
+            $account->save();
+
+            return redirect()->route('flyff.accounts.index')->with('success', 'Account Linked');
+        }
+
+        return redirect()->route('flyff.accounts.index')->with('error', 'Wrong credentials');
     }
 
     public function edit(FlyffAccount $account)

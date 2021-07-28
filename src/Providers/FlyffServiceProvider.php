@@ -3,13 +3,18 @@
 namespace Azuriom\Plugin\Flyff\Providers;
 
 use Azuriom\Models\Ban;
+use Azuriom\Models\Role;
+use Azuriom\Models\User;
 use Azuriom\Models\Setting;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Attempting;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Schema;
 use Azuriom\Support\SettingsRepository;
@@ -142,6 +147,45 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         });
 
         Ban::observe(BanObserver::class);
+
+        Auth::attempting(function (Attempting $event) {
+            $credentials = $event->credentials;
+
+            $user = User::firstWhere(Arr::except($credentials, 'password'));
+
+            //No Azuriom user so we have to create it if it exists in flyff DB
+            if ($user === null) {
+                if(isset($credentials['name'])){
+                    $detail = FlyffAccountDetail::firstWhere('account', $credentials['name']);
+                } else {
+                    $detail = FlyffAccountDetail::firstWhere('email', $credentials['email']);
+                }
+
+                if($detail === null)
+                    return;
+                
+                $account = FlyffAccount::firstWhere('account', $detail->account);
+
+                $hash = flyff_hash_mdp($credentials['password']);
+                
+                if($account->password === $hash){
+                    //password match we can create an user
+                    $user = User::forceCreate([
+                        'name' => $credentials['name'] ?? $detail->account,
+                        'email' => $credentials['email'] ?? $detail->email,
+                        'password' => Hash::make($credentials['password']),
+                        'role_id' => Role::defaultRoleId(),
+                        'game_id' => null,
+                        'last_login_ip' => request()->ip(),
+                        'last_login_at' => now(),
+                    ]);
+
+                    $account->Azuriom_user_id = $user->id;
+                    $account->Azuriom_user_access_token = Str::random(128);
+                    $account->save();
+                }
+            }
+        });
         
         $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
         //$this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\CheckSqlSrv::class);
