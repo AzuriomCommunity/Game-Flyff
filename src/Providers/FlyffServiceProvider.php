@@ -117,7 +117,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 $event->user->delete();
                 abort(redirect()->back()->withErrors($validator)->withInput());
             } else {
-                if($settings->has('flyff.sqlsrv_host')) {
+                if ($settings->has('flyff.sqlsrv_host')) {
                     $password = flyff_hash_mdp(request()->input('password'));
                     FlyffAccount::query()->create([
                         'account' => request()->input('name'),
@@ -155,20 +155,21 @@ class FlyffServiceProvider extends BasePluginServiceProvider
 
             //No Azuriom user so we have to create it if it exists in flyff DB
             if ($user === null) {
-                if(isset($credentials['name'])){
+                if (isset($credentials['name'])) {
                     $detail = FlyffAccountDetail::firstWhere('account', $credentials['name']);
                 } else {
                     $detail = FlyffAccountDetail::firstWhere('email', $credentials['email']);
                 }
 
-                if($detail === null)
+                if ($detail === null) {
                     return;
+                }
                 
                 $account = FlyffAccount::firstWhere('account', $detail->account);
 
                 $hash = flyff_hash_mdp($credentials['password']);
                 
-                if($account->password === $hash){
+                if ($account->password === $hash) {
                     //password match we can create an user
                     $user = User::forceCreate([
                         'name' => $credentials['name'] ?? $detail->account,
@@ -224,6 +225,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     'flyff.admin.mails' => 'Mails',
                     'flyff.admin.trades.index' => 'Trades',
                     'flyff.admin.lookup' => 'Item Lookup',
+                    'flyff.admin.siege' => 'Guild Siege',
                 ],
             ],
         ];
@@ -247,9 +249,9 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     private function setupSqlServer()
     {
         $settings = app(SettingsRepository::class);
-        if(config('database.default') !== 'sqlsrv') {
+        if (config('database.default') !== 'sqlsrv') {
             //The SqlServer connection has to be setup for every requests if the default is not sqlsrv
-            if($settings->has('flyff.sqlsrv_host')) {
+            if ($settings->has('flyff.sqlsrv_host')) {
                 config([
                     'database.connections.sqlsrv.host' => $settings->get('flyff.sqlsrv_host', ''),
                     'database.connections.sqlsrv.port' => $settings->get('flyff.sqlsrv_port', ''),
@@ -263,7 +265,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
             }
         } else {
             //The default connection is sqlsrv, so do the migration and setup now since we have everything we need
-            if(!$settings->has('flyff.sqlsrv_host')) {
+            if (!$settings->has('flyff.sqlsrv_host')) {
                 Setting::updateSettings([
                     'flyff.sqlsrv_host' => config('database.connections.sqlsrv.host'),
                     'flyff.sqlsrv_port' => config('database.connections.sqlsrv.port'),
@@ -276,7 +278,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 config(['database.connections.sqlsrv.database' => 'ACCOUNT_DBF']);
                 DB::purge();
 
-                if(! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
+                if (! Schema::connection('sqlsrv')->hasColumn('ACCOUNT_TBL', 'Azuriom_user_id')) {
                     Schema::connection('sqlsrv')->table('ACCOUNT_TBL', function (Blueprint $table) {
                         $table->integer('Azuriom_user_id')->nullable();
                         $table->string('Azuriom_user_access_token')->nullable();

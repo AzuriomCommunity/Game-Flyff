@@ -6,6 +6,7 @@ use Azuriom\Plugin\Flyff\Controllers\Admin\MailController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\AdminController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\TradeController;
 use Azuriom\Plugin\Flyff\Controllers\Admin\SettingController;
+use Azuriom\Plugin\Flyff\Controllers\Admin\GuildSiegeLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +24,16 @@ Route::get('/', [AdminController::class, 'index'])->name('index');
 
 Route::get('/settings', [SettingController::class, 'index'])->name('settings');
 
+Route::get('/siege', [GuildSiegeLogController::class, 'index'])->name('siege');
+
+Route::post('/add_siege', [GuildSiegeLogController::class, 'addSiege'])->name('addSiege');
+
 Route::post('/settings', [SettingController::class, 'update'])->name('settings_update');
 
 Route::get('/mails', [MailController::class, 'index'])->name('mails');
 
 Route::get('/items/lookup', [ItemController::class, 'index'])->name('lookup');
 
-Route::prefix('trades')->name('trades.')->group(function(){
+Route::prefix('trades')->name('trades.')->group(function () {
     Route::get('/', [TradeController::class, 'index'])->name('index');
 });
-
-
-
