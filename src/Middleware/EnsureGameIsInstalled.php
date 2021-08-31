@@ -3,6 +3,7 @@
 namespace Azuriom\Plugin\Flyff\Middleware;
 
 use Closure;
+use Azuriom\Models\Setting;
 
 class EnsureGameIsInstalled
 {
@@ -13,6 +14,14 @@ class EnsureGameIsInstalled
         }
         
         if ($request->routeIs('flyff.install.*') || $request->is('_debugbar/*')) {
+            return $next($request);
+        }
+
+        if (!setting('flyff_installed') && setting('flyff.sqlsrv_host')) {
+            Setting::updateSettings([
+                'flyff_installed' => 1
+            ]);
+
             return $next($request);
         }
 
