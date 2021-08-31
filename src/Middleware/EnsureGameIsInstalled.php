@@ -11,11 +11,11 @@ class EnsureGameIsInstalled
         if (setting('flyff_installed')) {
             return $next($request); // Already installed
         }
-
-        if ($request->is('flyff/install/*', '_debugbar/*')) {
+        
+        if ($request->routeIs('flyff.install.*') || $request->is('_debugbar/*')) {
             return $next($request);
         }
 
-        return response()->view('flyff::install.index');
+        return redirect()->route('flyff.install.index');
     }
 }

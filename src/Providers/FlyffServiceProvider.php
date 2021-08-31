@@ -37,9 +37,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $middleware = [
-        EnsureGameIsInstalled::class,
-    ];
+    protected $middleware = [];
 
     /**
      * The plugin's route middleware groups.
@@ -75,7 +73,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     {
         require_once __DIR__.'/../../vendor/autoload.php';
         
-        $this->registerMiddlewares();
+        $this->app['router']->pushMiddlewareToGroup('web', EnsureGameIsInstalled::class);
         GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //
     }
@@ -190,8 +188,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
         });
         
         $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
-        //$this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\CheckSqlSrv::class);
-        //
     }
 
     /**
