@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Models\GuildSiegeLog;
+use Illuminate\Http\Request;
 
 class GuildSiegeLogController extends Controller
 {
@@ -25,6 +26,12 @@ class GuildSiegeLogController extends Controller
             $last_char_defenser = null;
 
             $result = [];
+
+            $request->validate([
+                'siege_log' => 'required|file|mimes:txt',
+            ]);
+
+            $contents = explode("\n", file_get_contents($request->file('siege_log')->getRealPath()));
             
             foreach ($contents as $line) {
                 if (empty(trim($line))) {

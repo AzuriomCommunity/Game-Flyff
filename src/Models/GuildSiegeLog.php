@@ -17,5 +17,6 @@ class GuildSiegeLog extends Model
 
     protected $casts = [
         'data' => 'array',
+        'happened_at' => 'date',
     ];
 }

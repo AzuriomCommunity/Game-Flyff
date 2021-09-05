@@ -10,7 +10,8 @@
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <form action="{{route('flyff.admin.addSiege')}}" method="post">
+        <form action="{{route('flyff.admin.addSiege')}}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="input-group mb-3">
                 <div class="custom-file">
                   <input name="siege_log" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
@@ -25,6 +26,7 @@
                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror
             </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
@@ -48,7 +50,7 @@
                             {{ $guildSiege->id }}
                         </th>
                         <td>
-                            {{ format_date($guildSiege->happened_at) }}
+                            {{ format_date($guildSiege->happened_at, true) }}
                         </td>
                         <td>
                             <a class="mx-1" href="" role="button"><i class="fas fa-eye"></i></a>
