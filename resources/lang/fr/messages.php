@@ -69,7 +69,7 @@ return [
     ],
     'rank' => 'Place',
     'guild' => 'Guilde',
-    'player-number' => '# de joueurs',
+    'player-number' => 'Joueurs',
     'members' => 'Membres',
     'kills' => 'Victimes',
     'life' => 'Vie',

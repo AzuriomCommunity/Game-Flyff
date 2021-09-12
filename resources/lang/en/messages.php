@@ -93,7 +93,7 @@ return [
     ],
     'rank' => 'Rank',
     'guild' => 'Guild',
-    'player-number' => '# of players',
+    'player-number' => 'Players',
     'members' => 'Members',
     'kills' => 'Kills',
     'life' => 'Life',

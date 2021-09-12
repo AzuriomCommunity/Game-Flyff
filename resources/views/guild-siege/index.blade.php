@@ -10,6 +10,7 @@
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">{{trans('flyff::messages.guild')}}</th>
+                <th scope="col">MVP<th></th>
                 <th scope="col">{{ trans('messages.fields.action') }}</th>
             </tr>
             </thead>
@@ -22,9 +23,13 @@
                     </td>
                     @php
                         $guild = array_key_first($guildSiege->data['guild_ranking']);
+                        $mvp = array_key_first($guildSiege->data['player_ranking']);
                     @endphp
                     <td>
                         {{"$guild : {$guildSiege->data['guild_ranking'][$guild]['totalScore']}"}}
+                    </td>
+                    <td>
+                        {{"$mvp - {$guildSiege->data['player_ranking'][$mvp]['guild']} : {$guildSiege->data['player_ranking'][$mvp]['score']}"}}
                     </td>
                     <td>
                         <a class="mx-1" target="_blank" href="{{ route('flyff.guild-siege.show', $guildSiege->id)}}" role="button"><i class="fas fa-eye"></i></a>

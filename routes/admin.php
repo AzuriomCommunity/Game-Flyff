@@ -22,13 +22,12 @@ use Azuriom\Plugin\Flyff\Controllers\Admin\GuildSiegeLogController;
 
 Route::get('/', [AdminController::class, 'index'])->name('index');
 
-Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+Route::get('/settings', [SettingController::class, 'index'])->name('settings')->middleware('can:admin.settings');
+Route::post('/settings', [SettingController::class, 'update'])->name('settings_update')->middleware('can:admin.settings');
 
 Route::get('/siege', [GuildSiegeLogController::class, 'index'])->name('siege');
 
 Route::post('/add_siege', [GuildSiegeLogController::class, 'addSiege'])->name('addSiege');
-
-Route::post('/settings', [SettingController::class, 'update'])->name('settings_update');
 
 Route::get('/mails', [MailController::class, 'index'])->name('mails');
 
