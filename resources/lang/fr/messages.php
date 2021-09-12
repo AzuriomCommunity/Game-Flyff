@@ -67,4 +67,12 @@ return [
         24 => 'Tour Oubliée B4',
         25 => 'Tour Oubliée B5',
     ],
+    'rank' => 'Place',
+    'guild' => 'Guilde',
+    'player-number' => '# de joueurs',
+    'members' => 'Membres',
+    'kills' => 'Victimes',
+    'life' => 'Vie',
+    'deaths' => 'Morts',
+    'guild-siege' => 'Sièges de guilde',
 ];

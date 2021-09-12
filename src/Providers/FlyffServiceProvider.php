@@ -118,28 +118,35 @@ class FlyffServiceProvider extends BasePluginServiceProvider
             } else {
                 if ($settings->has('flyff.sqlsrv_host')) {
                     $password = flyff_hash_mdp(request()->input('password'));
-                    FlyffAccount::query()->create([
-                        'account' => request()->input('name'),
-                        'password' => $password,
-                        'isuse' => 'T',
-                        'member' => 'A',
-                        'realname' => '',
-                        'Azuriom_user_id' => $event->user->id,
-                        'Azuriom_user_access_token' => Str::random(128)
-                    ]);
-
-                    FlyffAccountDetail::query()->create([
-                        'account' => request()->input('name'),
-                        'gamecode' => 'A000',
-                        'tester' => '2',
-                        'm_chLoginAuthority' => 'F',
-                        'regdate' => Carbon::now(),
-                        'BlockTime' => '0',
-                        'EndTime' => '0',
-                        'WebTime' => '0',
-                        'isuse' => 'O',
-                        'email' => '',
-                    ]);
+                    $account = FlyffAccount::firstWhere('account', request()->input('name'));
+                    if (is_null($account)) {
+                        FlyffAccount::query()->create([
+                            'account' => request()->input('name'),
+                            'password' => $password,
+                            'isuse' => 'T',
+                            'member' => 'A',
+                            'realname' => '',
+                            'Azuriom_user_id' => $event->user->id,
+                            'Azuriom_user_access_token' => Str::random(128)
+                        ]);
+    
+                        FlyffAccountDetail::query()->create([
+                            'account' => request()->input('name'),
+                            'gamecode' => 'A000',
+                            'tester' => '2',
+                            'm_chLoginAuthority' => 'F',
+                            'regdate' => Carbon::now(),
+                            'BlockTime' => '0',
+                            'EndTime' => '0',
+                            'WebTime' => '0',
+                            'isuse' => 'O',
+                            'email' => '',
+                        ]);
+                    } else {
+                        $account->Azuriom_user_id = $event->user->id;
+                        $account->Azuriom_user_access_token = Str::random(128);
+                        $account->save();
+                    }
                 }
                 $event->user->save();
             }
@@ -199,7 +206,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     {
         return [
             'flyff.guilds.index' => 'flyff::messages.guilds',
-            'flyff.characters.index' => 'flyff::messages.characters'
+            'flyff.characters.index' => 'flyff::messages.characters',
+            'flyff.guild-siege.index' => 'flyff::messages.guild-siege',
         ];
     }
 
@@ -222,6 +230,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     'flyff.admin.mails' => 'Mails',
                     'flyff.admin.trades.index' => 'Trades',
                     'flyff.admin.lookup' => 'Item Lookup',
+                    'flyff.admin.siege' => 'Guild Siege',
                 ],
             ],
         ];
