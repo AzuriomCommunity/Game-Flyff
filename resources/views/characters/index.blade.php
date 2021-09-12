@@ -8,8 +8,8 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Guild</th>
+                <th scope="col">{{ trans('messages.fields.name') }}</th>
+                <th scope="col">{{trans('flyff::messages.guild')}}</th>
                 <th scope="col">Level</th>
                 <th scope="col">Job</th>
                 <th scope="col">Play time</th>

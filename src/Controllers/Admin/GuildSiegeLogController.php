@@ -2,12 +2,13 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers\Admin;
 
+use Carbon\Carbon;
 use Azuriom\Models\Setting;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Models\GuildSiegeLog;
-use Illuminate\Http\Request;
 
 class GuildSiegeLogController extends Controller
 {
@@ -26,7 +27,6 @@ class GuildSiegeLogController extends Controller
             $last_char_defenser = null;
 
             $result = [];
-
             $request->validate([
                 'siege_log' => 'required|file|mimes:txt',
             ]);
@@ -53,16 +53,16 @@ class GuildSiegeLogController extends Controller
                     $result[$last_guild_attacker][$last_char_attacker]
                         ['kills']
                             [(string)($result[$last_guild_attacker][$last_char_attacker]['life'] ?? 1)] // kills during current life
-                                [$last_char_defenser] = (
+                                ["$last_char_defenser - $last_guild_defenser"] = (
                                     $result[$last_guild_attacker][$last_char_attacker]
                                         ['kills']
                                             [(string)($result[$last_guild_attacker][$last_char_attacker]['life'] ?? 1)]
-                                                [$last_char_defenser] ?? 0 // the number that a $last_char_defenser has been killed during current life
+                                                ["$last_char_defenser - $last_guild_defenser"] ?? 0 // the number that a $last_char_defenser has been killed during current life
                                 ) + 1;
 
                     $result[$last_guild_defenser][$last_char_defenser]
                         ['deaths']
-                            [(string)($result[$last_guild_defenser][$last_char_defenser]['life'] ?? 1)] = $last_char_attacker; // who killed $last_char_defenser
+                            [(string)($result[$last_guild_defenser][$last_char_defenser]['life'] ?? 1)] = "$last_char_attacker - $last_guild_attacker"; // who killed $last_char_defenser
 
                     $result[$last_guild_defenser][$last_char_defenser]['life'] = ($result[$last_guild_defenser][$last_char_defenser]['life'] ?? 0) + 1; //increase the number of current life for the defenser
                 } else {

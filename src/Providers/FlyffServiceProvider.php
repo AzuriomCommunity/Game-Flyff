@@ -202,7 +202,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     {
         return [
             'flyff.guilds.index' => 'flyff::messages.guilds',
-            'flyff.characters.index' => 'flyff::messages.characters'
+            'flyff.characters.index' => 'flyff::messages.characters',
+            'flyff.guild-siege.index' => 'flyff::messages.guild-siege',
         ];
     }
 
