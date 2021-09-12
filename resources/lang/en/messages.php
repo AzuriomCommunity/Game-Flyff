@@ -91,4 +91,12 @@ return [
         166	=> 'Secret room 15',
         167 => 'Secret room 16',
     ],
+    'rank' => 'Rank',
+    'guild' => 'Guild',
+    'player-number' => '# of players',
+    'members' => 'Members',
+    'kills' => 'Kills',
+    'life' => 'Life',
+    'deaths' => 'Deaths',
+    'guild-siege' => 'Guild Sieges',
 ];

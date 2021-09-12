@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Azuriom\Plugin\Flyff\Controllers\FlyffHomeController;
 use Azuriom\Plugin\Flyff\Controllers\FlyffGuildController;
 use Azuriom\Plugin\Flyff\Controllers\FlyffAccountController;
+use Azuriom\Plugin\Flyff\Controllers\GuildSiegeLogController;
 use Azuriom\Plugin\Flyff\Controllers\FlyffCharacterController;
 
 /*
@@ -34,6 +35,11 @@ Route::prefix('guilds')->name('guilds.')->group(function () {
 Route::prefix('characters')->name('characters.')->group(function () {
     Route::get('/', [FlyffCharacterController::class, 'index'])->name('index');
     Route::get('/{character}', [FlyffCharacterController::class, 'show'])->name('show');
+});
+
+Route::prefix('guild-siege')->name('guild-siege.')->group(function () {
+    Route::get('/', [GuildSiegeLogController::class, 'index'])->name('index');
+    Route::get('/{guildSiege}', [GuildSiegeLogController::class, 'show'])->name('show');
 });
 
 Route::post('/update_character', [FlyffCharacterController::class, 'shop_update_character'])->name('cart.update_character');

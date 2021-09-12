@@ -209,7 +209,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     {
         return [
             'flyff.guilds.index' => 'flyff::messages.guilds',
-            'flyff.characters.index' => 'flyff::messages.characters'
+            'flyff.characters.index' => 'flyff::messages.characters',
+            'flyff.guild-siege.index' => 'flyff::messages.guild-siege',
         ];
     }
 
@@ -232,6 +233,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     'flyff.admin.mails' => 'Mails',
                     'flyff.admin.trades.index' => 'Trades',
                     'flyff.admin.lookup' => 'Item Lookup',
+                    'flyff.admin.siege' => 'Guild Siege',
                 ],
             ],
         ];
