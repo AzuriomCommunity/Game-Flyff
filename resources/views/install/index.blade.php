@@ -1,4 +1,4 @@
-@extends('flyff::install.layout')
+@extends('install.layout')
 
 @section('content')
 <p>If you don't have a SQLServer <code>username/password</code> please <a target="_blank" href="https://github.com/AzuriomCommunity/Game-Flyff/wiki/Installation#database">follow this link (click me)</a></p>

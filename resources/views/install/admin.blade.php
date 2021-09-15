@@ -1,4 +1,4 @@
-@extends('flyff::install.layout')
+@extends('install.layout')
 
 @section('content')
 <form method="POST" action="{{route('flyff.install.storeAdminAccount')}}">
