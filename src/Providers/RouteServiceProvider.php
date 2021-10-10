@@ -28,5 +28,12 @@ class RouteServiceProvider extends BaseRouteServiceProvider
             ->middleware('api')
             ->name($this->plugin->id.'.api.')
             ->group(plugin_path($this->plugin->id.'/routes/api.php'));
+        
+        if (! is_installed()) {
+            Route::prefix('install/'.$this->plugin->id)
+                ->middleware('web')
+                ->name($this->plugin->id.'.install.')
+                ->group(plugin_path($this->plugin->id.'/routes/install.php'));
+        }
     }
 }
