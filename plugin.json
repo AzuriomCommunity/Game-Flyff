@@ -2,7 +2,7 @@
     "id": "flyff",
     "name": "flyff",
     "description": "Plugin for Azuriom",
-    "version": "0.2.3",
+    "version": "0.2.7",
     "url": "https://azuriom.com",
     "authors": [
         "Javdu10"
@@ -11,5 +11,6 @@
         "\\Azuriom\\Plugin\\Flyff\\Providers\\FlyffServiceProvider",
         "\\Azuriom\\Plugin\\Flyff\\Providers\\RouteServiceProvider"
     ],
-    "apiId":35
+    "apiId":35,
+    "installRedirectPath": "install/flyff"
 }

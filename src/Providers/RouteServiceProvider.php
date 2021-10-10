@@ -29,8 +29,8 @@ class RouteServiceProvider extends BaseRouteServiceProvider
             ->name($this->plugin->id.'.api.')
             ->group(plugin_path($this->plugin->id.'/routes/api.php'));
         
-        if (! setting('flyff_installed')) {
-            Route::prefix($this->plugin->id.'/install')
+        if (! is_installed()) {
+            Route::prefix('install/'.$this->plugin->id)
                 ->middleware('web')
                 ->name($this->plugin->id.'.install.')
                 ->group(plugin_path($this->plugin->id.'/routes/install.php'));

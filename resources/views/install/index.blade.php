@@ -44,8 +44,10 @@
         <small id="sqlsrv_password_info" class="form-text">For security reasons, please do not use <code>abcd</code> as a password!</small>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
-    </button>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary rounded-pill mx-1">
+            {{ trans('messages.actions.continue') }} <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
 </form>
 @endsection

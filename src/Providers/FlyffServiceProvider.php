@@ -72,8 +72,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
     public function register()
     {
         require_once __DIR__.'/../../vendor/autoload.php';
-        
-        $this->app['router']->pushMiddlewareToGroup('web', EnsureGameIsInstalled::class);
         GameServiceProvider::registerGames(['flyff'=> FlyffGame::class]);
         //
     }
@@ -85,7 +83,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
      */
     public function boot()
     {
-        $this->setupSqlServer();
         // $this->registerPolicies();
 
         $this->loadViews();
@@ -100,101 +97,13 @@ class FlyffServiceProvider extends BasePluginServiceProvider
 
         $this->registerUserNavigation();
 
-        View::composer('admin.dashboard', FlyffAdminDashboardComposer::class);
-
-        Event::listen(function (Registered $event) {
-            $event->user->access_token = Str::random(128);
-            $settings = app(SettingsRepository::class);
-
-            $validator = Validator::make(request()->all(), [
-                'name' => ['string', 'max:25', 'regex:/^[A-Za-z0-9]+$/u'],
-                'password' => ['required', 'string', 'min:8','max:16','regex:/^[A-Za-z0-9]+$/u'],
-            ]);
-       
-            if ($validator->fails()) {
-                Auth::logout();
-                $event->user->delete();
-                abort(redirect()->back()->withErrors($validator)->withInput());
-            } else {
-                if ($settings->has('flyff.sqlsrv_host')) {
-                    $password = flyff_hash_mdp(request()->input('password'));
-                    $account = FlyffAccount::firstWhere('account', request()->input('name'));
-                    if (is_null($account)) {
-                        FlyffAccount::query()->create([
-                            'account' => request()->input('name'),
-                            'password' => $password,
-                            'isuse' => 'T',
-                            'member' => 'A',
-                            'realname' => '',
-                            'Azuriom_user_id' => $event->user->id,
-                            'Azuriom_user_access_token' => Str::random(128)
-                        ]);
-    
-                        FlyffAccountDetail::query()->create([
-                            'account' => request()->input('name'),
-                            'gamecode' => 'A000',
-                            'tester' => '2',
-                            'm_chLoginAuthority' => 'F',
-                            'regdate' => Carbon::now(),
-                            'BlockTime' => '0',
-                            'EndTime' => '0',
-                            'WebTime' => '0',
-                            'isuse' => 'O',
-                            'email' => '',
-                        ]);
-                    } else {
-                        $account->Azuriom_user_id = $event->user->id;
-                        $account->Azuriom_user_access_token = Str::random(128);
-                        $account->save();
-                    }
-                }
-                $event->user->save();
-            }
-        });
-
-        Ban::observe(BanObserver::class);
-
-        Auth::attempting(function (Attempting $event) {
-            $credentials = $event->credentials;
-
-            $user = User::firstWhere(Arr::except($credentials, 'password'));
-
-            //No Azuriom user so we have to create it if it exists in flyff DB
-            if ($user === null) {
-                if (isset($credentials['name'])) {
-                    $detail = FlyffAccountDetail::firstWhere('account', $credentials['name']);
-                } else {
-                    $detail = FlyffAccountDetail::firstWhere('email', $credentials['email']);
-                }
-
-                if ($detail === null) {
-                    return;
-                }
-                
-                $account = FlyffAccount::firstWhere('account', $detail->account);
-
-                $hash = flyff_hash_mdp($credentials['password']);
-                
-                if ($account->password === $hash) {
-                    //password match we can create an user
-                    $user = User::forceCreate([
-                        'name' => $credentials['name'] ?? $detail->account,
-                        'email' => $credentials['email'] ?? $detail->email,
-                        'password' => Hash::make($credentials['password']),
-                        'role_id' => Role::defaultRoleId(),
-                        'game_id' => null,
-                        'last_login_ip' => request()->ip(),
-                        'last_login_at' => now(),
-                    ]);
-
-                    $account->Azuriom_user_id = $user->id;
-                    $account->Azuriom_user_access_token = Str::random(128);
-                    $account->save();
-                }
-            }
-        });
-        
-        $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
+        if (is_installed()) {
+            $this->setupSqlServer();
+            $this->setupAuthEvents();
+            Ban::observe(BanObserver::class);
+            View::composer('admin.dashboard', FlyffAdminDashboardComposer::class);
+            $this->app['router']->pushMiddlewareToGroup('web', \Azuriom\Plugin\Flyff\Middleware\InGameShop::class);
+        }
     }
 
     /**
@@ -249,6 +158,99 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                 'name' => 'flyff::messages.game-accounts',
             ]
         ];
+    }
+
+    private function setupAuthEvents()
+    {
+        Event::listen(function (Registered $event) {
+            $event->user->access_token = Str::random(128);
+            $settings = app(SettingsRepository::class);
+
+            $validator = Validator::make(request()->all(), [
+                'name' => ['string', 'max:25', 'regex:/^[A-Za-z0-9]+$/u'],
+                'password' => ['required', 'string', 'min:8','max:16','regex:/^[A-Za-z0-9]+$/u'],
+            ]);
+       
+            if ($validator->fails()) {
+                Auth::logout();
+                $event->user->delete();
+                abort(redirect()->back()->withErrors($validator)->withInput());
+            } else {
+                if ($settings->has('flyff.sqlsrv_host')) {
+                    $password = flyff_hash_mdp(request()->input('password'));
+                    $account = FlyffAccount::firstWhere('account', request()->input('name'));
+                    if (is_null($account)) {
+                        FlyffAccount::query()->create([
+                            'account' => request()->input('name'),
+                            'password' => $password,
+                            'isuse' => 'T',
+                            'member' => 'A',
+                            'realname' => '',
+                            'Azuriom_user_id' => $event->user->id,
+                            'Azuriom_user_access_token' => Str::random(128)
+                        ]);
+    
+                        FlyffAccountDetail::query()->create([
+                            'account' => request()->input('name'),
+                            'gamecode' => 'A000',
+                            'tester' => '2',
+                            'm_chLoginAuthority' => 'F',
+                            'regdate' => Carbon::now(),
+                            'BlockTime' => '0',
+                            'EndTime' => '0',
+                            'WebTime' => '0',
+                            'isuse' => 'O',
+                            'email' => '',
+                        ]);
+                    } else {
+                        $account->Azuriom_user_id = $event->user->id;
+                        $account->Azuriom_user_access_token = Str::random(128);
+                        $account->save();
+                    }
+                }
+                $event->user->save();
+            }
+        });
+
+        Auth::attempting(function (Attempting $event) {
+            $credentials = $event->credentials;
+
+            $user = User::firstWhere(Arr::except($credentials, 'password'));
+
+            //No Azuriom user so we have to create it if it exists in flyff DB
+            if ($user === null) {
+                if (isset($credentials['name'])) {
+                    $detail = FlyffAccountDetail::firstWhere('account', $credentials['name']);
+                } else {
+                    $detail = FlyffAccountDetail::firstWhere('email', $credentials['email']);
+                }
+
+                if ($detail === null) {
+                    return;
+                }
+                
+                $account = FlyffAccount::firstWhere('account', $detail->account);
+
+                $hash = flyff_hash_mdp($credentials['password']);
+                
+                if ($account->password === $hash) {
+                    //password match we can create an user
+                    $user = User::forceCreate([
+                        'name' => $credentials['name'] ?? $detail->account,
+                        'email' => $credentials['email'] ?? $detail->email,
+                        'password' => Hash::make($credentials['password']),
+                        'role_id' => Role::defaultRoleId(),
+                        'game_id' => null,
+                        'last_login_ip' => request()->ip(),
+                        'last_login_at' => now(),
+                    ]);
+
+                    $account->Azuriom_user_id = $user->id;
+                    $account->Azuriom_user_access_token = Str::random(128);
+                    $account->save();
+                }
+            }
+        });
     }
 
     private function setupSqlServer()

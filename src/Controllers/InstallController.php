@@ -41,16 +41,13 @@ class InstallController extends Controller
 
         $user->markEmailAsVerified();
         $user->forceFill(['role_id' => 2])->save();
-        Setting::updateSettings([
-            'flyff_installed' => 1
-        ]);
 
-        return redirect()->route('home');
+        return redirect()->route('install.finish');
     }
 
     public function setupDatabase(Request $request)
     {
-        DB::purge();
+        
 
         config([
             'database.connections.sqlsrv.host' => $request->input('sqlsrv_host'),
@@ -59,6 +56,7 @@ class InstallController extends Controller
             'database.connections.sqlsrv.password' => $request->input('sqlsrv_password'),
             'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
         ]);
+        DB::purge();
 
         try {
             DB::connection('sqlsrv')->getPdo();
