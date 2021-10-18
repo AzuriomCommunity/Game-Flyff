@@ -14,18 +14,19 @@ class FlyffGame extends Game
     {
         return 'Flyff';
     }
-    public function id(){ return 'flyff';}
+    public function id()
+    {
+        return 'flyff';
+    }
 
     public function getAvatarUrl(User $user, int $size = 64)
     {
         $files = Storage::files("public/flyff/avatars/{$user->id}");
         if (count($files) > 0) {
-            $url = Storage::url(Arr::random($files));
+            return url(Storage::url(Arr::random($files)));
         } else {
-            $url = plugin_asset('flyff', 'img/unknown_avatar.png');
+            return plugin_asset('flyff', 'img/unknown_avatar.png');
         }
-        
-        return $url;
     }
 
     public function getUserUniqueId(string $name)

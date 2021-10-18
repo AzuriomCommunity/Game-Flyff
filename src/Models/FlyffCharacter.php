@@ -349,7 +349,7 @@ class FlyffCharacter extends Model
     public function getAvatarUrlAttribute()
     {
         if (!is_null($this->flyffAccount) && Storage::exists("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png")) {
-            return Storage::url("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png");
+            return url(Storage::url("public/flyff/avatars/{$this->flyffAccount->Azuriom_user_id}/{$this->m_szName}.png"));
         }
             
         return plugin_asset('flyff', 'img/unknown_avatar.png');
