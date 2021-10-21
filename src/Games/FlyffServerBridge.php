@@ -6,7 +6,6 @@ use RuntimeException;
 use Azuriom\Models\User;
 use Azuriom\Games\ServerBridge;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 use Azuriom\Plugin\Shop\Models\User as ShopUser;
 
 /**
@@ -25,7 +24,7 @@ class FlyffServerBridge extends ServerBridge
     {
         if (@fsockopen($this->server->address, $this->server->port, $errorno, $errorstr, 0.1)) {
             $connected = 0;
-            if (Schema::connection('sqlsrv')->hasTable('CHARACTER_01_DBF.dbo.tblMultiServerInfo')) {
+            if ($this->hasTblMultiServerInfoView()) {
                 $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.tblMultiServerInfo')->where('MultiServer', '1')->count();
             } else {
                 $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '1')->count();
@@ -113,7 +112,7 @@ class FlyffServerBridge extends ServerBridge
 
     private function playerIsConnected($idPlayer, $idServer)
     {
-        if (Schema::connection('sqlsrv')->hasTable('CHARACTER_01_DBF.dbo.tblMultiServerInfo')) {
+        if ($this->hasTblMultiServerInfoView()) {
             return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.tblMultiServerInfo')
                 ->where([
                     ['m_idPlayer', $idPlayer],
@@ -162,5 +161,12 @@ class FlyffServerBridge extends ServerBridge
         if ($fp) {
             fclose($fp);
         }
+    }
+
+    private function hasTblMultiServerInfoView()
+    {
+        return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.INFORMATION_SCHEMA.TABLES')
+            ->where('TABLE_NAME', 'tblMultiServerInfo')
+            ->exists();
     }
 }
