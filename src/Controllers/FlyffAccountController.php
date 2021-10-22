@@ -77,7 +77,7 @@ class FlyffAccountController extends Controller
         abort_if($account->Azuriom_user_id != auth()->id(), 403);
 
         $validated = $this->validate(request(), [
-            'password' => ['required', 'string', 'min:8','max:16', 'regex:/^[A-Za-z0-9]+$/u','confirmed']
+            'password' => ['required', 'string', 'min:8','max:16', 'regex:/^[A-Za-z0-9\.\!\?\*]+$/u','confirmed']
         ]);
 
         $account->password = flyff_hash_mdp($validated['password']);
