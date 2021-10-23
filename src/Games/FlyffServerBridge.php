@@ -117,14 +117,14 @@ class FlyffServerBridge extends ServerBridge
                 ->where([
                     ['m_idPlayer', $idPlayer],
                     ['serverindex', $idServer],
-                    ['MultiServer', 1],
+                    ['MultiServer', '>=', '1'],
                 ])->exists();
         } else {
             return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
                 ->where([
                     ['m_idPlayer', $idPlayer],
                     ['serverindex', $idServer],
-                    ['MultiServer', 1],
+                    ['MultiServer', '>=', '1'],
                 ])->exists();
         }
     }
