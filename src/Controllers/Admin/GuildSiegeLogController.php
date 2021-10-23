@@ -79,10 +79,13 @@ class GuildSiegeLogController extends Controller
 
             foreach ($result as $keyGuild => $valueGuild) {
                 uasort($result[$keyGuild], function ($a, $b) {
-                    return $b['score'] <=> $a['score']; // sort the players of a guild
+                    return ($b['score'] ?? 0) <=> ($a['score'] ?? 0); // sort the players of a guild
                 });
                 
                 foreach ($result[$keyGuild] as $keyPlayer => $valuePlayer) {
+                    $result[$keyGuild][$keyPlayer]['score'] = $result[$keyGuild][$keyPlayer]['score'] ?? 0;
+                    $result[$keyGuild][$keyPlayer]['kills'] = $result[$keyGuild][$keyPlayer]['kills'] ?? [];
+                    $result[$keyGuild][$keyPlayer]['deaths'] = $result[$keyGuild][$keyPlayer]['deaths'] ?? [];
                     $playerRanking[$keyPlayer] = $result[$keyGuild][$keyPlayer];
                     $playerRanking[$keyPlayer]['guild'] = $keyGuild;
                     $result[$keyGuild]['totalScore'] = ($result[$keyGuild]['totalScore'] ?? 0) + $result[$keyGuild][$keyPlayer]['score'];
