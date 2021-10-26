@@ -296,7 +296,7 @@ class FlyffCharacter extends Model
      */
     public function getMasterRankAttribute(): ?int
     {
-        if ($this->m_nJob > 16 && $this->m_nJob < 24) {
+        if ($this->m_nJob > 15 && $this->m_nJob < 24) {
             if ($this->m_nLevel >= 110) {
                 return 6;
             } elseif ($this->m_nLevel >= 100) {
