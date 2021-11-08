@@ -167,7 +167,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
             $settings = app(SettingsRepository::class);
 
             $validator = Validator::make(request()->all(), [
-                'name' => ['string', 'min:4','max:25', 'regex:/^[A-Za-z0-9]+$/u'],
+                'name' => ['string', 'min:4','max:16', 'regex:/^[A-Za-z0-9]+$/u'],
                 'password' => ['required', 'string', 'min:8','max:16','regex:/^[A-Za-z0-9\.\!\?\*]+$/u'],
             ]);
        
