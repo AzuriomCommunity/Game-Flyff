@@ -17,7 +17,7 @@ class FlyffAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'account' => ['required', 'string', 'max:25', 'regex:/^[A-Za-z0-9]+$/u',
+            'account' => ['required', 'string','min:4', 'max:16', 'regex:/^[A-Za-z0-9]+$/u',
                 function ($attribute, $value, $fail) {
                     $test = FlyffAccount::where('account', $value)->first();
                     if ($test) {
