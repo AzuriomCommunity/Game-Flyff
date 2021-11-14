@@ -110,7 +110,7 @@ class FlyffGuild extends Model
      */
     public function leader()
     {
-        return $this->members()->where('m_nClass', '=', 0)->get()->first()->character();
+        return $this->members()->where('m_nClass', '=', 0)->get()->first()->character()->withoutGlobalScopes(['valid']);
     }
 
     /**
