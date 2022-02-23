@@ -29,11 +29,11 @@ class FlyffServerBridge extends ServerBridge
             } else {
                 $connected = DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')->where('MultiServer', '>=', '1')->count();
             }
-            $maxPlayerConnected = (int) DB::connection('sqlsrv')->table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first()->number;
+            $maxPlayerConnected = DB::connection('sqlsrv')->table('LOGGING_01_DBF.dbo.LOG_USER_CNT_TBL')->select('number')->orderByDesc('number')->first();
     
             return [
                 'players' => $connected,
-                'max_players' => $maxPlayerConnected,
+                'max_players' => $maxPlayerConnected ? $maxPlayerConnected->number : 0,
             ];
         }
 
