@@ -202,10 +202,6 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                             'isuse' => 'O',
                             'email' => '',
                         ]);
-                    } else {
-                        $account->Azuriom_user_id = $event->user->id;
-                        $account->Azuriom_user_access_token = Str::random(128);
-                        $account->save();
                     }
                 }
                 $event->user->save();
