@@ -202,6 +202,8 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                             'isuse' => 'O',
                             'email' => '',
                         ]);
+                    } else {
+                        request()->session()->flash('success', trans('flyff::messages.create-game-account'));
                     }
                 }
                 $event->user->save();

@@ -99,4 +99,5 @@ return [
     'life' => 'Life',
     'deaths' => 'Deaths',
     'guild-siege' => 'Guild Sieges',
+    'create-game-account' => 'Your site account has been created, don\'t forget to create a game account in the "In-Game Accounts" menu!',
 ];

@@ -75,4 +75,5 @@ return [
     'life' => 'Vie',
     'deaths' => 'Morts',
     'guild-siege' => 'Sièges de guilde',
+    'create-game-account' => 'Votre compte site à été créer, n\'oubliez pas de créer un compte jeu dans le menu "Comptes de jeu"!',
 ];
