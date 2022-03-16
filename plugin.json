@@ -2,11 +2,12 @@
     "id": "flyff",
     "name": "flyff",
     "description": "Plugin for Azuriom",
-    "version": "0.2.9",
+    "version": "0.3.0",
     "url": "https:\/\/azuriom.com",
     "authors": [
         "Javdu10"
     ],
+    "azuriom_api": "1.0.0",
     "providers": [
         "\\Azuriom\\Plugin\\Flyff\\Providers\\FlyffServiceProvider",
         "\\Azuriom\\Plugin\\Flyff\\Providers\\RouteServiceProvider"

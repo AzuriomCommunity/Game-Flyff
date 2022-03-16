@@ -9,7 +9,7 @@
             @csrf
 
             <div class="form-group">
-                <label for="sqlsrv_host">SQL Server Host</label>
+                <label for="sqlsrv_host" class="form-label">SQL Server Host</label>
                 <input type="text" class="form-control @error('sqlsrv_host') is-invalid @enderror" id="sqlsrv_host" name="sqlsrv_host" placeholder="DESKTOP-XXX/SQLSERVER" value="{{ old('sqlsrv_host', setting('flyff.sqlsrv_host')) }}">
 
                 @error('sqlsrv_host')
@@ -19,7 +19,7 @@
             </div>
 
             <div class="form-group">
-                <label for="sqlsrv_port">SQL Server Port</label>
+                <label for="sqlsrv_port" class="form-label">SQL Server Port</label>
                 <input type="text" class="form-control @error('sqlsrv_port') is-invalid @enderror" id="sqlsrv_port" name="sqlsrv_port" value="{{ old('sqlsrv_port', setting('flyff.sqlsrv_port')) }}" aria-describedby="sqlsrv_port_info">
 
                 @error('sqlsrv_port')
@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                <label for="sqlsrv_username">SQL Server Username</label>
+                <label for="sqlsrv_username" class="form-label">SQL Server Username</label>
                 <input type="text" class="form-control @error('sqlsrv_username') is-invalid @enderror" id="sqlsrv_username" name="sqlsrv_username" placeholder="MyNewAdminUser" value="{{ old('sqlsrv_username', setting('flyff.sqlsrv_username')) }}" aria-describedby="sqlsrv_username_info">
 
                 @error('sqlsrv_username')
@@ -39,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                <label for="sqlsrv_password">SQL Server Password</label>
+                <label for="sqlsrv_password" class="form-label">SQL Server Password</label>
                 <input type="text" class="form-control @error('sqlsrv_password') is-invalid @enderror" id="sqlsrv_password" name="sqlsrv_password" value="{{ old('sqlsrv_password', setting('flyff.sqlsrv_password')) }}"  aria-describedby="sqlsrv_password_info">
 
                 @error('sqlsrv_password')
@@ -49,7 +49,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
             </button>
         </form>
 

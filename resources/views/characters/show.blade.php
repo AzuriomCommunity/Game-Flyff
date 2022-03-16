@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="container content">
-
-    <div class="media border border-primary rounded">
-        <img src="{{$character->AvatarUrl}}" class="align-self-center mr-3" alt="...">
-        <div class="media-body">
-            <h5 class="mt-0"><img src="{{$character->JobIcon}}" alt=""> <img src="{{$character->SexIcon}}" alt=""> {{$character->m_szName}} : {{$character->m_nLevel}}</h5>
+    <div class="d-flex align-items-center">
+        <div class="flex-shrink-0">
+            <img src="{{$character->AvatarUrl}}" class="align-self-center mr-3" alt="...">
+        </div>
+        <div class="flex-grow-1 ms-3">
             <p>
                 <div class="row">
                     <div class="col-4">

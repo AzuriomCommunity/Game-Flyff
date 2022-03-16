@@ -13,12 +13,12 @@
                         <form action="{{route('flyff.accounts.change-password', $account)}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Account Name</label>
-                                <input type="text" name="account" class="form-control" disabled value="{{$account->account}}" id="exampleInputEmail1">
+                                <label for="account_name" class="form-label">Account Name</label>
+                                <input type="text" name="account" class="form-control" disabled value="{{$account->account}}" id="account_name">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">New Password</label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword1">
+                                <label for="account_password" class="form-label">New Password</label>
+                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="account_password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

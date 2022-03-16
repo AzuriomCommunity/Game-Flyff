@@ -18,7 +18,7 @@
                     <td>{{$guild_rank['totalScore']}}</td>
                     <td>{{count($guild_rank['members'])}}</td>
                     <td>
-                        <a class="mx-1" data-toggle="collapse" href="#collapse-guild-{{$loop->index}}" role="button" aria-expanded="false" aria-controls="collapse-guild-{{$loop->index}}"><i class="fas fa-eye"></i></a>
+                        <a class="mx-1" data-toggle="collapse" href="#collapse-guild-{{$loop->index}}" role="button" aria-expanded="false" aria-controls="collapse-guild-{{$loop->index}}"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
                 <tr class="collapse" id="collapse-guild-{{$loop->index}}">

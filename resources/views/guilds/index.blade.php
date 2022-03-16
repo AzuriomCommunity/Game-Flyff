@@ -5,7 +5,7 @@
 @section('content')
 <div class="container content">
     <table class="table table-striped">
-        <thead class="thead-dark">
+        <thead class="table-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -22,7 +22,7 @@
                     <td>{{$guild->m_nWin}}</td>
                     <td>{{$guild->leader->m_szName}}</td>
                     <td>
-                        <a href="{{route('flyff.guilds.show', $guild->m_szGuild)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-toggle="tooltip"><i class="fas fa-eye"></i></a>
+                        <a href="{{route('flyff.guilds.show', $guild->m_szGuild)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-toggle="tooltip"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
             @endforeach

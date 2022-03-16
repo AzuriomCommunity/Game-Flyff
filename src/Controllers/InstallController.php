@@ -2,15 +2,15 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers;
 
-use Azuriom\Models\User;
+use Azuriom\Http\Controllers\Controller;
 use Azuriom\Models\Setting;
-use Illuminate\Support\Str;
+use Azuriom\Models\User;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
-use Azuriom\Http\Controllers\Controller;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Str;
 
 class InstallController extends Controller
 {
@@ -47,14 +47,12 @@ class InstallController extends Controller
 
     public function setupDatabase(Request $request)
     {
-        
-
         config([
             'database.connections.sqlsrv.host' => $request->input('sqlsrv_host'),
             'database.connections.sqlsrv.port' => $request->input('sqlsrv_port'),
             'database.connections.sqlsrv.username' => $request->input('sqlsrv_username'),
             'database.connections.sqlsrv.password' => $request->input('sqlsrv_password'),
-            'database.connections.sqlsrv.database' => 'ACCOUNT_DBF'
+            'database.connections.sqlsrv.database' => 'ACCOUNT_DBF',
         ]);
         DB::purge();
 
@@ -64,10 +62,10 @@ class InstallController extends Controller
             if ($th->getMessage() === 'could not find driver') {
                 $architecture = ((PHP_INT_SIZE === 4) ? 'x86' : 'x64');
                 $ThreadSafe = ZEND_THREAD_SAFE ? 'TS version' : 'NTS version';
-                $phpVersion = (float)phpversion();
+                $phpVersion = (float) PHP_VERSION;
                 $inipath = php_ini_loaded_file();
                 $tmp = Str::beforeLast($inipath, 'php.ini');
-                $extfolder = Str::substr($tmp, 0, \strlen($tmp)-1).'/ext';
+                $extfolder = Str::substr($tmp, 0, \strlen($tmp) - 1).'/ext';
                 $error = <<<EOT
                     <code>sqlsrv</code> and <code>pdo_sqlsrv</code> drivers are wrong version or not installed.<br>
                     Please verify that you choosed the <code>{$architecture} {$ThreadSafe}, for php {$phpVersion}</code><br>
@@ -77,9 +75,10 @@ class InstallController extends Controller
                     - <code>{$inipath}</code><br>
                     Then restart you webserver
                 EOT;
-                
+
                 return redirect()->route('flyff.install.index')->with('error', $error);
             }
+
             return redirect()->route('flyff.install.index')->with('error', $th->getMessage());
         }
 

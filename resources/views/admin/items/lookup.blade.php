@@ -18,7 +18,7 @@
 
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search fa-sm"></i>
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
             </div>

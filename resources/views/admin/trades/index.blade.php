@@ -17,7 +17,7 @@
 
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-search fa-sm"></i>
+                    <i class="bi bi-search"></i>
                 </button>
             </div>
         </div>
@@ -44,7 +44,7 @@
                         <td>{{$trade->firstTradeDetail->character->m_szName}}</td>
                         <td>{{$trade->secondTradeDetail->character->m_szName}}</td>
                         <td>{{$trade->TradeDt}}</td>
-                        <td><a data-toggle="collapse" href="#collapse-{{$trade->TradeID}}" role="button" aria-expanded="false" aria-controls="collapse-{{$trade->TradeID}}" class="mx-1"><i class="fas fa-eye"></i></a></td>
+                        <td><a data-toggle="collapse" href="#collapse-{{$trade->TradeID}}" role="button" aria-expanded="false" aria-controls="collapse-{{$trade->TradeID}}" class="mx-1"><i class="bi bi-eye"></i></a></td>
                     </tr>
                     <tr class="collapse" id="collapse-{{$trade->TradeID}}">
                         <td colspan="5">

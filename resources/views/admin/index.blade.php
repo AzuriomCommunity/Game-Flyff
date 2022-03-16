@@ -12,7 +12,7 @@
 
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search fa-sm"></i>
+                        <i class="bi bi-search"></i>
                     </button>
                 </div>
             </div>
@@ -41,12 +41,12 @@
                                 {{ $user->id }}
 
                                 @if($user->is_deleted)
-                                    <i class="fas fa-user-slash text-dark" title="{{ trans('admin.users.info.deleted') }}" data-toggle="tooltip"></i>
+                                    <i class="bi bi-person-x text-dark" title="{{ trans('admin.users.info.deleted') }}" data-toggle="tooltip"></i>
                                 @elseif($user->isAdmin())
-                                    <i class="fas fa-crown text-warning" title="{{ trans('admin.users.info.admin') }}" data-toggle="tooltip"></i>
+                                    <i class="bi bi-trophy text-warning" title="{{ trans('admin.users.info.admin') }}" data-toggle="tooltip"></i>
                                 @endif
                                 @if($user->is_banned)
-                                    <i class="fas fa-ban text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
+                                    <i class="bi bi-slash-circle text-danger" title="{{ trans('admin.users.info.banned') }}" data-toggle="tooltip"></i>
                                 @endif
                             </th>
                             <td @if($user->is_deleted) class="text-strikethrough" @endif>
@@ -64,8 +64,8 @@
                                 {{ format_date($user->created_at) }}
                             </td>
                             <td>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                <a class="mx-1" data-toggle="collapse" href="#collapse-{{$user->id}}" role="button" aria-expanded="false" aria-controls="collapse-{{$user->id}}"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                <a class="mx-1" data-toggle="collapse" href="#collapse-{{$user->id}}" role="button" aria-expanded="false" aria-controls="collapse-{{$user->id}}"><i class="bi bi-eye"></i></a>
                             </td>
                         </tr>
                         <tr class="collapse" id="collapse-{{$user->id}}">
@@ -86,7 +86,7 @@
                                                 <td>{{$item->account}}</td>
                                                 <td>{{$item->member}}</td>
                                                 <td>{{$item->characters()->count()}}</td>
-                                                <td><a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a></td>
+                                                <td><a href="{{ route('admin.users.edit', $user) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -102,7 +102,7 @@
             {{ $users->withQueryString()->links() }}
 
             <a class="btn btn-primary" href="{{ route('admin.users.create') }}">
-                <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
             </a>
         </div>
     </div>

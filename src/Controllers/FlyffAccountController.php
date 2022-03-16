@@ -2,13 +2,13 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Models\FlyffAccountDetail;
 use Azuriom\Plugin\Flyff\Requests\FlyffAccountRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class FlyffAccountController extends Controller
 {
@@ -24,7 +24,7 @@ class FlyffAccountController extends Controller
             'member' => 'A',
             'realname' => '',
             'Azuriom_user_id' => auth()->id(),
-            'Azuriom_user_access_token' => Str::random(128)
+            'Azuriom_user_access_token' => Str::random(128),
         ]);
 
         FlyffAccountDetail::query()->create([
@@ -46,13 +46,13 @@ class FlyffAccountController extends Controller
     public function link(Request $request)
     {
         $validated = $request->validate([
-            'account' => 'required|string',
-            'password' => 'required|string',
+            'account_link' => 'required|string',
+            'password_link' => 'required|string',
         ]);
 
-        $account = FlyffAccount::firstWhere('account', $validated['account']);
+        $account = FlyffAccount::firstWhere('account', $validated['account_link']);
 
-        $hash = flyff_hash_mdp($validated['password']);
+        $hash = flyff_hash_mdp($validated['password_link']);
 
         if ($account !== null && $account->password === $hash) {
             $account->Azuriom_user_id = auth()->id();
@@ -67,17 +67,17 @@ class FlyffAccountController extends Controller
 
     public function edit(FlyffAccount $account)
     {
-        abort_if($account->Azuriom_user_id != auth()->id(), 403);
+        abort_if($account->Azuriom_user_id !== auth()->id(), 403);
 
-        return view('flyff::change-password', ['account'=>$account]);
+        return view('flyff::change-password', ['account' => $account]);
     }
 
     public function update(FlyffAccount $account)
     {
-        abort_if($account->Azuriom_user_id != auth()->id(), 403);
+        abort_if($account->Azuriom_user_id !== auth()->id(), 403);
 
         $validated = $this->validate(request(), [
-            'password' => ['required', 'string', 'min:8','max:16', 'regex:/^[A-Za-z0-9\.\!\?\*]+$/u','confirmed']
+            'password' => ['required', 'string', 'min:8', 'max:16', 'regex:/^[A-Za-z0-9\.\!\?\*]+$/u', 'confirmed'],
         ]);
 
         $account->password = flyff_hash_mdp($validated['password']);

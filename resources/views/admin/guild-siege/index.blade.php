@@ -51,7 +51,7 @@
                             {{ format_date($guildSiege->happened_at, true) }}
                         </td>
                         <td>
-                            <a class="mx-1" target="_blank" href="{{ route('flyff.guild-siege.show', $guildSiege->id)}}" role="button"><i class="fas fa-eye"></i></a>
+                            <a class="mx-1" target="_blank" href="{{ route('flyff.guild-siege.show', $guildSiege->id)}}" role="button"><i class="bi bi-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach

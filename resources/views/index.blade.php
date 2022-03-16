@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Plugin home')
+@section('title', 'Flyff Accounts')
 
 @section('content')
     <div class="container content">
@@ -22,7 +22,7 @@
                                 <td>{{$item->member}}</td>
                                 <td>{{$item->characters()->count()}}</td>
                                 <td>
-                                    <a href="{{route('flyff.accounts.edit', $item)}}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                                    <a href="{{route('flyff.accounts.edit', $item)}}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -38,8 +38,8 @@
                         <form action="{{route('flyff.accounts.store')}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Account Name</label>
-                                <input type="text" name="account" class="form-control @error('account') is-invalid @enderror" id="exampleInputEmail1">
+                                <label for="create_account_name" class="form-label">Account Name</label>
+                                <input type="text" name="account" class="form-control @error('account') is-invalid @enderror" id="create_account_name">
                                 @error('account')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -47,8 +47,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword1">
+                                <label for="create_account_password" class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="create_account_password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -77,18 +77,18 @@
                         <form action="{{route('flyff.accounts.link')}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Account Name</label>
-                                <input type="text" name="account" class="form-control @error('account') is-invalid @enderror" id="exampleInputEmail1">
-                                @error('account')
+                                <label for="link_account_name" class="form-label">Account Name</label>
+                                <input type="text" name="account_link" class="form-control @error('account_link') is-invalid @enderror" id="link_account_name">
+                                @error('account_link')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword1">
-                                @error('password')
+                                <label for="link_account_password" class="form-label">Password</label>
+                                <input type="password" name="password_link" class="form-control @error('password_link') is-invalid @enderror" id="link_account_password">
+                                @error('password_link')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -2,10 +2,10 @@
 
 namespace Azuriom\Plugin\Flyff\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Azuriom\Plugin\Flyff\Models\User;
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Plugin\Flyff\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -22,7 +22,7 @@ class AdminController extends Controller
             ->when($search, function (Builder $query, string $search) {
                 $query->scopes(['search' => $search]);
             })->paginate();
-        
+
         return view('flyff::admin.index', [
             'users' => $users,
             'search' => $search,
