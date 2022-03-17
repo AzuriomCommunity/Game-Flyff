@@ -3,7 +3,6 @@
 @section('title', trans('flyff::messages.guilds').' - '. $guild->m_szGuild )
 
 @section('content')
-<div class="container content">
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>
@@ -33,5 +32,4 @@
             
         </tbody>
     </table>
-</div>
 @endsection

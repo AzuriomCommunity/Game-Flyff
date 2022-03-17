@@ -3,7 +3,6 @@
 @section('title', 'Guilds')
 
 @section('content')
-<div class="container content">
     <table class="table table-striped">
         <thead class="table-dark">
             <tr>
@@ -29,5 +28,4 @@
         </tbody>
     </table>
     {{$guilds->links()}}
-</div>
 @endsection

@@ -16,7 +16,7 @@
                   <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="publishedInput">When the guild siege happened?</label>
                 <input type="text" class="form-control date-picker @error('happened_at') is-invalid @enderror" id="publishedInput" name="happened_at" value="{{ old('happened_at', $guildSiege->happened_at ?? now()) }}" required aria-describedby="publishedInfo">
             

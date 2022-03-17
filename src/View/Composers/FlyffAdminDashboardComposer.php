@@ -2,10 +2,10 @@
 
 namespace Azuriom\Plugin\Flyff\View\Composers;
 
-use Azuriom\Plugin\Flyff\Models\FlyffGuild;
+use Azuriom\Extensions\Plugin\AdminDashboardCardComposer;
 use Azuriom\Plugin\Flyff\Models\FlyffAccount;
 use Azuriom\Plugin\Flyff\Models\FlyffCharacter;
-use Azuriom\Extensions\Plugin\AdminDashboardCardComposer;
+use Azuriom\Plugin\Flyff\Models\FlyffGuild;
 
 class FlyffAdminDashboardComposer extends AdminDashboardCardComposer
 {
@@ -26,19 +26,19 @@ class FlyffAdminDashboardComposer extends AdminDashboardCardComposer
                 'color' => 'warning',
                 'name' => 'user\'s account',
                 'value' => $user_count,
-                'icon' => 'fas fa-money-bill-wave',
+                'icon' => 'bi bi-bar-chart-line-fill',
             ],
             'created_guilds' => [
                 'color' => 'warning',
                 'name' => 'in-game guilds',
                 'value' => $guild_count,
-                'icon' => 'fas fa-money-bill-wave',
+                'icon' => 'bi bi-bar-chart-line-fill',
             ],
             'flyff_characters' => [
                 'color' => 'warning',
                 'name' => 'in-game characters',
                 'value' => $character_count,
-                'icon' => 'fas fa-money-bill-wave',
+                'icon' => 'bi bi-bar-chart-line-fill',
             ],
         ];
     }

@@ -3,7 +3,6 @@
 @section('title', trans('flyff::messages.characters').' - '. $character->m_szName)
 
 @section('content')
-<div class="container content">
     <div class="d-flex align-items-center">
         <div class="flex-shrink-0">
             <img src="{{$character->AvatarUrl}}" class="align-self-center mr-3" alt="...">
@@ -28,6 +27,4 @@
             </p>
         </div>
     </div>
-</div>
-</div>
 @endsection

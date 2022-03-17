@@ -3,7 +3,6 @@
 @section('title', 'Guild Siege')
 
 @section('content')
-<div class="container content">
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -42,5 +41,4 @@
     </div>
 
     {{ $guildSieges->links() }}
-</div>
 @endsection

@@ -2,8 +2,7 @@
 
 @section('title', 'Flyff Accounts')
 
-@section('content')
-    <div class="container content">
+@section('content') 
         <div class="row">
             <div class="col-12">
                 <table class="table">
@@ -37,7 +36,7 @@
                     <div class="card-body">
                         <form action="{{route('flyff.accounts.store')}}" method="post">
                             @csrf
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="create_account_name" class="form-label">Account Name</label>
                                 <input type="text" name="account" class="form-control @error('account') is-invalid @enderror" id="create_account_name">
                                 @error('account')
@@ -46,7 +45,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="create_account_password" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="create_account_password">
                                 @error('password')
@@ -55,7 +54,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="password-confirm">{{ trans('auth.confirm-password') }}</label>
                                 <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
                                 @error('password_confirmation')
@@ -76,7 +75,7 @@
                     <div class="card-body">
                         <form action="{{route('flyff.accounts.link')}}" method="post">
                             @csrf
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="link_account_name" class="form-label">Account Name</label>
                                 <input type="text" name="account_link" class="form-control @error('account_link') is-invalid @enderror" id="link_account_name">
                                 @error('account_link')
@@ -85,7 +84,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="mb-3">
                                 <label for="link_account_password" class="form-label">Password</label>
                                 <input type="password" name="password_link" class="form-control @error('password_link') is-invalid @enderror" id="link_account_password">
                                 @error('password_link')
@@ -100,5 +99,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

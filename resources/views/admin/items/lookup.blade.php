@@ -9,18 +9,16 @@
 </div>
 
     <form class="form-inline mb-3" action="{{ route('flyff.admin.lookup') }}" method="GET">
-        <div class="form-group mb-2">
+        <div class="mb-3 mb-2">
             <label for="searchInput" class="sr-only">{{ trans('messages.actions.search') }}</label>
 
             <div class="input-group">
                 <input type="text" class="form-control" id="searchInput" name="itemID" value="{{ $itemID ?? '' }}" placeholder="itemID">
                 <input type="text" class="form-control" id="searchInput" name="min" value="{{ $min ?? '' }}" placeholder="min value">
 
-                <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-search"></i>
                     </button>
-                </div>
             </div>
         </div>
     </form>
