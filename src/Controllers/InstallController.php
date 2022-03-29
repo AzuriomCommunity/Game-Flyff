@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 class InstallController extends Controller
 {
@@ -64,8 +63,7 @@ class InstallController extends Controller
                 $ThreadSafe = ZEND_THREAD_SAFE ? 'TS version' : 'NTS version';
                 $phpVersion = (float) PHP_VERSION;
                 $inipath = php_ini_loaded_file();
-                $tmp = Str::beforeLast($inipath, 'php.ini');
-                $extfolder = Str::substr($tmp, 0, \strlen($tmp) - 1).'/ext';
+                $extfolder = ini_get('extension_dir');
                 $error = <<<EOT
                     <code>sqlsrv</code> and <code>pdo_sqlsrv</code> drivers are wrong version or not installed.<br>
                     Please verify that you choosed the <code>{$architecture} {$ThreadSafe}, for php {$phpVersion}</code><br>

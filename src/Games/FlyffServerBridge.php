@@ -6,7 +6,6 @@ use RuntimeException;
 use Azuriom\Models\User;
 use Azuriom\Games\ServerBridge;
 use Illuminate\Support\Facades\DB;
-use Azuriom\Plugin\Shop\Models\User as ShopUser;
 
 /**
  * CHARACTER_01_DBF
@@ -70,6 +69,8 @@ class FlyffServerBridge extends ServerBridge
         } else {
             $idPlayer = str_pad($idPlayer, 7, '0', STR_PAD_LEFT); //formating nothing important
             $idServer = str_pad($idServer, 2, '0', STR_PAD_LEFT);
+
+            abort_unless($this->playerIsInAzuriomUserAccount($user, $idPlayer, $idServer), 403);
         }
 
         if ($this->playerIsConnected($idPlayer, $idServer)) {
@@ -87,6 +88,23 @@ class FlyffServerBridge extends ServerBridge
     public function getDefaultPort()
     {
         return self::DEFAULT_PORT;
+    }
+
+    private function playerIsInAzuriomUserAccount($user, $idPlayer, $idServer)
+    {
+        $accounts = DB::connection('sqlsrv')->table('ACCOUNT_DBF.dbo.ACCOUNT_TBL')
+                ->select('account')->where('Azuriom_user_id', $user->id)->get();
+        
+        return DB::connection('sqlsrv')->table('CHARACTER_01_DBF.dbo.CHARACTER_TBL')
+            ->where(
+                [
+                    ['m_idPlayer', $idPlayer],
+                    ['serverindex', $idServer],
+                    ['isblock', 'F'],
+                ]
+            )
+            ->whereIn('account', $accounts->pluck('account')->all())
+            ->exists();
     }
 
     /**
