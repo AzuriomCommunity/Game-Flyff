@@ -25,7 +25,7 @@
                     <td><img src="{{$member->character->JobIcon}}" alt="{{$member->character->JobName}}"> {{$member->character->JobName}}</td>
                     <td>{{$member->character->TotalTimePlayed}}</td>
                     <td>
-                        <a href="{{route('flyff.characters.show', $member->character->m_szName)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                        <a href="{{route('flyff.characters.show', $member->character->m_szName)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
             @endforeach

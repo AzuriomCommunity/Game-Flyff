@@ -32,7 +32,7 @@ class GuildSiegeLogController extends Controller
             ]);
 
             $contents = explode("\n", file_get_contents($request->file('siege_log')->getRealPath()));
-            
+
             foreach ($contents as $line) {
                 if (empty(trim($line))) {
                     continue;
@@ -43,12 +43,15 @@ class GuildSiegeLogController extends Controller
                     if (count($attacker_defenser) < 2) {
                         $attacker_defenser = explode('â†’', $line);
                     }
+                    if (count($attacker_defenser) < 2) {
+                        $attacker_defenser = explode('??', $line);
+                    }
                     $last_guild_attacker = Str::between($attacker_defenser[0], '[', ']');
                     $last_char_attacker = Str::afterLast(Str::beforeLast(Str::ascii($attacker_defenser[0]), '('), ' ');
 
                     $last_guild_defenser = Str::between($attacker_defenser[1], '[', ']');
                     $last_char_defenser = trim(Str::afterLast($attacker_defenser[1], ' '));
-                    
+
 
                     $result[$last_guild_attacker][$last_char_attacker]
                         ['kills']
@@ -81,7 +84,7 @@ class GuildSiegeLogController extends Controller
                 uasort($result[$keyGuild], function ($a, $b) {
                     return ($b['score'] ?? 0) <=> ($a['score'] ?? 0); // sort the players of a guild
                 });
-                
+
                 foreach ($result[$keyGuild] as $keyPlayer => $valuePlayer) {
                     $result[$keyGuild][$keyPlayer]['score'] = $result[$keyGuild][$keyPlayer]['score'] ?? 0;
                     $result[$keyGuild][$keyPlayer]['kills'] = $result[$keyGuild][$keyPlayer]['kills'] ?? [];

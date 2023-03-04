@@ -21,7 +21,7 @@
                                 <td>{{$item->member}}</td>
                                 <td>{{$item->characters()->count()}}</td>
                                 <td>
-                                    <a href="{{route('flyff.accounts.edit', $item)}}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{route('flyff.accounts.edit', $item)}}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
                                 </td>
                             </tr>
                         @endforeach

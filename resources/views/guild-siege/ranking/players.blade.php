@@ -18,7 +18,7 @@
                     <td>{{$player_rank['score']}}</td>
                     <td>{{$player_rank['guild']}}</td>
                     <td>
-                        <a class="mx-1" data-toggle="collapse" href="#collapse-player-{{$loop->index}}" role="button" aria-expanded="false" aria-controls="collapse-player-{{$loop->index}}"><i class="bi bi-eye"></i></a>
+                        <a class="mx-1" data-bs-toggle="collapse" href="#collapse-player-{{$loop->index}}" role="button" aria-expanded="false" aria-controls="collapse-player-{{$loop->index}}"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
                 <tr class="collapse" id="collapse-player-{{$loop->index}}">
