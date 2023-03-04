@@ -33,7 +33,7 @@
                     <td><img src="{{$character->JobIcon}}" alt="{{$character->JobName}}"> {{$character->JobName}}</td>
                     <td>{{$character->TotalTimePlayed}}</td>
                     <td>
-                        <a href="{{route('flyff.characters.show', $character->m_szName)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-toggle="tooltip"><i class="bi bi-eye"></i></a>
+                        <a href="{{route('flyff.characters.show', $character->m_szName)}}" class="mx-1" title="{{ trans('messages.actions.show') }}" data-bs-toggle="tooltip"><i class="bi bi-eye"></i></a>
                     </td>
                 </tr>
             @endforeach
