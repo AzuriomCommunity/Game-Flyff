@@ -21,7 +21,7 @@
         @error('sqlsrv_port')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
-        <small id="sqlsrv_port_info" class="form-text">If you use <code>DESKTOP-XXX</code> leave the port empty, otherwise the default port is <code>1443</code> </small>
+        <small id="sqlsrv_port_info" class="form-text">On localhost, If you use <code>DESKTOP-XXX</code> (Windows authentification like SQLServer Studio) leave the port empty, otherwise the default port is <code>1443</code> </small>
     </div>
 
     <div class="mb-3">
