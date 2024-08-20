@@ -207,7 +207,7 @@ class FlyffServiceProvider extends BasePluginServiceProvider
                     //password match we can create an user
                     $user = User::forceCreate([
                         'name' => $credentials['name'] ?? $detail->account,
-                        'email' => $credentials['email'] ?? $detail->email,
+                        'email' => $credentials['email'] ?? empty($detail->email) ? (str()->random(16) . '@' . str()->random(4).'.tld') : $detail->email,
                         'password' => Hash::make($credentials['password']),
                         'role_id' => Role::defaultRoleId(),
                         'game_id' => null,
